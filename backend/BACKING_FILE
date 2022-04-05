@@ -1,0 +1,65 @@
+{
+  "course_name": "Tilden Park GC - Tilden Park GC",
+  "course_ratings": [
+    {
+      "color": "Blue",
+      "gender": "M",
+      "par": "70",
+      "course_rating_18": "71.6",
+      "bogey_rating_18": "95.8",
+      "slope_rating_18": "130",
+      "front_9": "35.9/130",
+      "back_9": "35.7/130"
+    },
+    {
+      "color": "White",
+      "gender": "M",
+      "par": "70",
+      "course_rating_18": "69.5",
+      "bogey_rating_18": "92.5",
+      "slope_rating_18": "124",
+      "front_9": "34.9/124",
+      "back_9": "34.6/124"
+    },
+    {
+      "color": "Red",
+      "gender": "M",
+      "par": "70",
+      "course_rating_18": "67.8",
+      "bogey_rating_18": "90.1",
+      "slope_rating_18": "120",
+      "front_9": "34.4/121",
+      "back_9": "33.4/119"
+    },
+    {
+      "color": "BLUE",
+      "gender": "F",
+      "par": "73",
+      "course_rating_18": "76.4",
+      "bogey_rating_18": "108.6",
+      "slope_rating_18": "137",
+      "front_9": "38.2/133",
+      "back_9": "38.2/140"
+    },
+    {
+      "color": "WHITE",
+      "gender": "F",
+      "par": "71",
+      "course_rating_18": "73.8",
+      "bogey_rating_18": "104.9",
+      "slope_rating_18": "132",
+      "front_9": "37.1/131",
+      "back_9": "36.7/133"
+    },
+    {
+      "color": "RED",
+      "gender": "F",
+      "par": "71",
+      "course_rating_18": "71.6",
+      "bogey_rating_18": "100.8",
+      "slope_rating_18": "124",
+      "front_9": "36.2/125",
+      "back_9": "35.4/123"
+    }
+  ]
+}
