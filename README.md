@@ -7,11 +7,9 @@ ___
 1. figma links:  
     * [invite link](https://www.figma.com/file/cVglD4GCRkwcWVER1X9lAS/Handicap-Mockup?node-id=4%3A16) 
     * [project link](https://www.figma.com/file/cVglD4GCRkwcWVER1X9lAS/Handicap-Mockup?node-id=0%3A1)
-<<<<<<< HEAD
 1. Define _schemas_ and _template_ for json responses _(example of json template and schemas)_
 =======
 1. Define schemas and template for json responses _(example of what I'm talking about below)_
->>>>>>> 27042660d38d84b09b1f7510eabb1dc1a692da53
 ```json
 {
     "status": "success",
