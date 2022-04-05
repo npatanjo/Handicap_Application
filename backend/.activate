@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CURRENT_DIR=$(pwd)
+
+
+source $CURRENT_DIR/my_env/bin/activate
+
+# previous script:
+#
+# source ~/Handicap_Application/my_env/bin/activate
+#
