@@ -7,9 +7,9 @@ import json
 
 
 def main():
-    with open("BACKING_FILE_2", "w") as f:
+    with open("BACKING_FILE", "w") as f:
         f.write("")
-    for i in range(100):
+    for i in range(4, 200):
         print_data = []
         html = get_html("https://ncrdb.usga.org/courseTeeInfo.aspx?CourseID=" + get_url_extension(i))
         soup = BeautifulSoup(html.content, 'html.parser')
@@ -54,18 +54,49 @@ def get_html(url):
 
 
 def dump_to_json_file(course_map, print_data):
+    if course_map == None:
+        return
+    #to_add = json.dumps(course_map)
+    to_add = []
+    data = {}
+    j = open("BACKING_FILE")
+    check = True
+
+    try:
+        data = json.load(j)
+
+    except ValueError as e:
+        check = False
+
+    if check == True:
+        add = data
+        add.append(course_map)
+        with open("BACKING_FILE", "w") as f:
+            f.write(json.dumps(add, indent=2))
+    else:
+        to_add.append(course_map)
+        with open("BACKING_FILE", "w") as f:
+            f.write(json.dumps(to_add, indent=2))
+
+
+
+    """
     j = open("BACKING_FILE_2")
+    check = True
 
     try:
         data = json.load(j)
     except ValueError as e:
-        return
-    print_data.append(data)
+        check = False
+
+    if check == True:
+        print_data.append(data)
 
     print_data.append(course_map)
 
     with open("BACKING_FILE_2", "w") as f:
         f.write(json.dumps(print_data, indent=2))
+    """
 
 def get_url_extension(i):
     num = str(i)
