@@ -1,1 +1,3 @@
 my_env
+node_modules/
+.expo/
