@@ -38,3 +38,11 @@ ___
 * ...
 
 
+___
+##### Resources:
+* [The Nerdy Canuck](https://www.youtube.com/channel/UCmG1UbEI0iFE1tAw2SyvvXg):  
+    * [Restful API with NodeJS, Express & Typescript](https://www.youtube.com/watch?v=vyz47fUXcxU&t=1056s)  
+* [Best React Native Documentation](https://www.reactnative.express/)  
+* Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)  
+* [Package Search](https://www.npmjs.com/)
+
