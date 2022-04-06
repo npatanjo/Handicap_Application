@@ -13,9 +13,9 @@ const MONGO_OPTIONS = {
 }
 
 /** Change later. for mongo db database used for project */
-const MONGO_USERNAME = process.env.MONGO_USERNAME || 'superuser';
-const MONGO_PASSWORD = process.env.MONGO_USERNAME || 'supersecretpassword1';
-const MONGO_HOST = process.env.MONGO_URL || `ds343895.mlab.com:43895/mongobongo`;
+const MONGO_USERNAME = process.env.MONGO_USERNAME || '';
+const MONGO_PASSWORD = process.env.MONGO_USERNAME || '';
+const MONGO_HOST = process.env.MONGO_URL || ``;
 
 const MONGO = {
     host: MONGO_HOST,
