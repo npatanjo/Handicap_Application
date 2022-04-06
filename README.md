@@ -28,13 +28,13 @@ ___
 
 #### NATE TODO:
 * set up yarn (you're going to need this if you're going to use the react front end)
-* ...
+* Look into axios
 * ...
 
 
 #### NICK TODO: 
 * make __figma__ (figma is a design tool to layout guis for reference.)
-* ...
+* look at backend branch. When you are satisfied, talk to Nate then merge with master. 
 * ...
 
 
@@ -46,3 +46,8 @@ ___
 * Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)  
 * [Package Search](https://www.npmjs.com/)
 
+---
+##### Heroku:
+* All current heroku config/changes are in the backend branch.
+* The name of the current heroku app is handicap-app-711 ---> will change later. was made temp for testing.
+* The name of both the project and cluster is handicap. The project name can be changed but the cluster name is immutable. 
