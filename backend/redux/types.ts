@@ -1,0 +1,9 @@
+//user reducer types
+export const SET_AUTHENTICATED=’’;
+export const SET_UNAUTHENTICATED=’’;
+export const SET_USER=’’;
+export const LOADING_USER=’’;
+//UI reducer types
+export const SET_ERRORS=’’;
+export const LOADING_UI=’’;
+export const CLEAR_ERRORS=’’;
