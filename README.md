@@ -51,3 +51,7 @@ ___
 * All current heroku config/changes are in the backend branch.
 * The name of the current heroku app is handicap-app-711 ---> will change later. was made temp for testing.
 * The name of both the project and cluster is handicap. The project name can be changed but the cluster name is immutable. 
+
+---
+##### Golf information (for Nick):
+* The following link will tell you how golf handicaps are caculated. This way you know what we need from our users. [tuitorial](https://www.fastgolfer.com/how-to-calculate-golf-handicap/)
