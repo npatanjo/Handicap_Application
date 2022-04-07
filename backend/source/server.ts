@@ -10,7 +10,7 @@ const NAMESPACE = 'Server';
 const router = express();
 
 /**  Connect to Mongo */
-mongoose
+/**mongoose
     .connect(config.mongo.url, config.mongo.options)
     .then((result) => {
         logging.info(NAMESPACE, 'Mongo Connected');
@@ -18,7 +18,16 @@ mongoose
     .catch((error) => {
         logging.error(NAMESPACE, error.message, error);
     });
+    */
 
+mongoose
+    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
+    .then((result) => {
+        logging.info(NAMESPACE, 'Mongo Connected');
+    })
+    .catch((error) => {
+        logging.error(NAMESPACE, error.message, error);
+    });
 
 /** Log the request */
 router.use((req, res, next) => {
@@ -28,7 +37,7 @@ router.use((req, res, next) => {
     res.on('finish', () => {
         /** Log the res */
         logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
-    });
+    })
 
     next();
 });
