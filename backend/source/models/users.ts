@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
+import logging from '../config/logging';
 import IUser from '../interface/users';
 
 const UserSchema: Schema = new Schema(
@@ -13,5 +14,9 @@ const UserSchema: Schema = new Schema(
         timestamps: true
     }
 );
+
+UserSchema.post<IUser>('save', function () {
+    logging.info('Mongo', 'Checkout the new user: ', this);
+});
 
 export default mongoose.model<IUser>("User", UserSchema)

@@ -17,6 +17,8 @@ const MONGO_USERNAME = process.env.MONGO_USERNAME || '';
 const MONGO_PASSWORD = process.env.MONGO_USERNAME || '';
 const MONGO_HOST = process.env.MONGO_URL || ``;
 
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority';
+
 const MONGO = {
     host: MONGO_HOST,
     password: MONGO_PASSWORD,
