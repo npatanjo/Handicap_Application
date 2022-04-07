@@ -47,6 +47,10 @@ ___
 * [Package Search](https://www.npmjs.com/)
 
 ---
+##### Backend Notes:
+* To run server in ./backend `yarn serve`
+
+---
 ##### Heroku:
 * All current heroku config/changes are in the backend branch.
 * The name of the current heroku app is handicap-app-711 ---> will change later. was made temp for testing.
