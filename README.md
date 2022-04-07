@@ -48,7 +48,7 @@ ___
 
 ---
 ##### Backend Notes:
-* To run server in ./backend --> 'yarn serve'
+* To run server in ./backend `yarn serve`
 
 ---
 ##### Heroku:
