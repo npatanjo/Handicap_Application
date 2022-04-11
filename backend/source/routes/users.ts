@@ -4,7 +4,7 @@ import { getAllUsers } from '../controllers/users';
 
 const router = express.Router();
 
-router.post('/create/user', createUser);
+router.post('/add/user', createUser);
 router.get('/get/users', getAllUsers);
 
 export = router;
