@@ -8,9 +8,28 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const logging_1 = __importDefault(require("./config/logging"));
 const config_1 = __importDefault(require("./config/config"));
-const sample_1 = __importDefault(require("./routes/sample"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const users_1 = __importDefault(require("./routes/users"));
 const NAMESPACE = 'Server';
 const router = (0, express_1.default)();
+/**  Connect to Mongo */
+/**mongoose
+    .connect(config.mongo.url, config.mongo.options)
+    .then((result) => {
+        logging.info(NAMESPACE, 'Mongo Connected');
+    })
+    .catch((error) => {
+        logging.error(NAMESPACE, error.message, error);
+    });
+    */
+mongoose_1.default
+    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config_1.default.mongo.options)
+    .then((result) => {
+    logging_1.default.info(NAMESPACE, 'Mongo Connected');
+})
+    .catch((error) => {
+    logging_1.default.error(NAMESPACE, error.message, error);
+});
 /** Log the request */
 router.use((req, res, next) => {
     /** Log the req */
@@ -35,7 +54,7 @@ router.use((req, res, next) => {
     next();
 });
 /** Routes go here */
-router.use('/api/sample', sample_1.default);
+router.use('/api/books', users_1.default);
 /** Error handling */
 router.use((req, res, next) => {
     const error = new Error('Not found');

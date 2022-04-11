@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import User from "../models/users"
+import User from '../models/users';
 
 const createUser = (req: Request, res: Response, next: NextFunction) => {
-    let {username, password, gender, token } = req.body;
+    let { username, password, gender, token } = req.body;
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(), //mongoose build id generator
         username,
         password,
         gender,
-        token 
+        token
     });
 
     return user
@@ -20,30 +20,29 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
                 user: result
             });
         })
-       .catch((error) => {
+        .catch((error) => {
             return res.status(500).json({
                 message: error.message,
                 error
             });
         });
-    
 };
 
 const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
     User.find()
-    .exec()
-    .then(results => {
-        return res.status(200).json({
-            users: results,
-            count: results.length
+        .exec()
+        .then((results) => {
+            return res.status(200).json({
+                users: results,
+                count: results.length
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
         });
-    })
-    .catch(error => {
-        return res.status(500).json({
-            message: error.message,
-            error
-        });
-    });
 };
 
-export default { createUser, getAllUsers };
+export { createUser, getAllUsers };

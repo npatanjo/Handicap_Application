@@ -10,7 +10,7 @@ const MONGO_OPTIONS = {
     ///poolSize: 50,
     autoIndex: false,
     retryWrites: false
-}
+};
 
 /** Change later. for mongo db database used for project */
 const MONGO_USERNAME = process.env.MONGO_USERNAME || '';
