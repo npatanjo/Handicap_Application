@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import userRoutes from './routes/users';
 
 const NAMESPACE = 'Server';
-const router = express();
+const app = express();
 
 /**  Connect to Mongo */
 /**mongoose
@@ -30,7 +30,7 @@ mongoose
     });
 
 /** Log the request */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     /** Log the req */
     logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
@@ -43,11 +43,11 @@ router.use((req, res, next) => {
 });
 
 /** Parse the body of the request */
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 /** Rules of our API */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
@@ -59,11 +59,15 @@ router.use((req, res, next) => {
     next();
 });
 
+/** Authentication --> later move to routes for style */
+
+// app.post('/login')
+
 /** Routes go here */
-router.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
 
 /** Error handling */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     const error = new Error('Not found');
 
     res.status(404).json({
@@ -73,6 +77,6 @@ router.use((req, res, next) => {
 
 /** create server: to start server: yarn serve*/
 
-const httpServer = http.createServer(router);
+const httpServer = http.createServer(app);
 
 httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));

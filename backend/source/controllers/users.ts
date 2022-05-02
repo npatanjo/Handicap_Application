@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { application, NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import User from '../models/users';
 
@@ -45,4 +45,11 @@ const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-export { createUser, getAllUsers };
+
+const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+};
+
+
+
+
+export { createUser, getAllUsers, authenticateUser };
