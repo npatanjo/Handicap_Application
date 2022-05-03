@@ -8,10 +8,7 @@ function WelcomeScreen(props) {
       source={require("../assets/background.png")}
     >
       <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/Golf-Ball.png")}
-        />
+        <Image style={styles.logo} source={require("../assets/logo.png")} />
       </View>
       <View style={styles.logoContainer} />
       <View style={styles.buttonContainer}>
@@ -19,7 +16,7 @@ function WelcomeScreen(props) {
           <Text style={{ fontSize: 15, opacity: 1 }}>LOGIN</Text>
         </View>
         <View style={styles.createAccountButton}>
-          <Text style={{ fontSize: 15, opacity: 1 }}>Create Account</Text>
+          <Text style={{ fontSize: 15, opacity: 1 }}>CREATE ACCOUNT</Text>
         </View>
       </View>
     </ImageBackground>
@@ -30,7 +27,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     alignItems: "center",
-    opacity: 0.8,
+    opacity: 0.7,
   },
   logoContainer: {
     flex: 2,
@@ -41,6 +38,12 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
+    top: +40,
+    opacity: 1,
+    backgroundColor: "#fff",
+    borderColor: "black",
+    borderWidth: 2,
+    borderRadius: 10,
   },
   buttonContainer: {
     backgroundColor: "#fff",
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderBottomColor: "black",
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
   },
   createAccountButton: {
     width: "100%",
