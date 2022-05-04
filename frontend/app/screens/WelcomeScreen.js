@@ -1,23 +1,27 @@
 import React from "react";
 import { ImageBackground, Text, StyleSheet, View, Image } from "react-native";
 
+import { NavigationContainer } from "@react-navigation/native";
+
+import colors from "../config/colors";
+
 function WelcomeScreen(props) {
   return (
     <ImageBackground
       style={styles.background}
       source={require("../assets/background.png")}
     >
+      <View
+        style={styles.loginButton}
+        onPress={() => NavigationContainer.navigate("Login")}
+      >
+        <Text style={styles.textLog}>LOGIN</Text>
+      </View>
+      <View style={styles.createAccountButton}>
+        <Text style={styles.textCreate}>CREATE AN ACCOUNT</Text>
+      </View>
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/logo.png")} />
-      </View>
-      <View style={styles.logoContainer} />
-      <View style={styles.buttonContainer}>
-        <View style={styles.loginButton}>
-          <Text style={{ fontSize: 15, opacity: 1 }}>LOGIN</Text>
-        </View>
-        <View style={styles.createAccountButton}>
-          <Text style={{ fontSize: 15, opacity: 1 }}>CREATE ACCOUNT</Text>
-        </View>
       </View>
     </ImageBackground>
   );
@@ -27,44 +31,56 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     alignItems: "center",
-    opacity: 0.7,
+    justifyContent: "flex-end",
   },
   logoContainer: {
-    flex: 2,
-    justifyContent: "center",
+    position: "absolute",
+    top: 70,
+    borderRadius: 10,
+    width: 110,
+    height: 110,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    /*
+    for 3D effect. Logo is WIP obviously
+
+    borderBottomColor: "#fff",
+    borderBottomWidth: 2,
+    borderLeftColor: "#fff",
+    borderLeftWidth: 2,
+    backgroundColor: "#3093CB",
+    borderColor: "#fff",
+    borderWidth: 1,
+    */
   },
   logo: {
-    width: 100,
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    top: +40,
-    opacity: 1,
-    backgroundColor: "#fff",
-    borderColor: "black",
-    borderWidth: 2,
-    borderRadius: 10,
-  },
-  buttonContainer: {
-    backgroundColor: "#fff",
-    width: "100%",
-    height: "100%",
-    flex: 0.7,
-    alignItems: "center",
-  },
-  loginButton: {
-    width: "90%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderBottomColor: "black",
-    borderBottomWidth: 2,
+    width: 60,
+    height: 85,
+    bottom: 5,
   },
   createAccountButton: {
     width: "100%",
-    height: 50,
-    justifyContent: "center",
+    height: 70,
+    backgroundColor: colors.primary,
     alignItems: "center",
+    justifyContent: "center",
+  },
+  loginButton: {
+    width: "100%",
+    height: 70,
+    backgroundColor: colors.secondary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textLog: {
+    fontFamily: "Helvetica",
+    fontWeight: "bold",
+    color: colors.primary,
+  },
+  textCreate: {
+    fontFamily: "Helvetica",
+    fontWeight: "bold",
+    color: colors.secondary,
   },
 });
 

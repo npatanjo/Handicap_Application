@@ -1,25 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  Image,
-  Button,
-} from "react-native";
+
+import { StyleSheet } from "react-native";
+
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 
-export default function App() {
-  return <WelcomeScreen />;
-}
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <WelcomeScreen />
+    </NavigationContainer>
+  );
+}
