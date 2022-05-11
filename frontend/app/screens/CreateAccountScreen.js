@@ -43,10 +43,9 @@ function CreateAccountScreen(props) {
           <Text style={styles.buttonStyle}>Create</Text>
         </View>
       </View>
-
       <View style={styles.footerContainer}>
         {/* add onlick below */}
-        <Text style={styles.footerText}>Login</Text>
+        <Text style={styles.footerText}>LOGIN</Text>
       </View>
     </SafeAreaView>
   );
