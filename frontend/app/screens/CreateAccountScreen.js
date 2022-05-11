@@ -9,40 +9,44 @@ import {
   Button,
 } from "react-native";
 
+import { Picker } from "@react-native-community/picker";
 import colors from "../config/colors";
 
-function LoginScreen(props) {
+function CreateAccountScreen(props) {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.secondary }}>
       <View style={styles.titleContainer}>
-        <Text style={styles.loginText}>Login!</Text>
+        <Text style={styles.loginText}>Create Account</Text>
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
+          placeholder="Email"
+          placeholderTextColor={colors.primary}
+        ></TextInput>
+        <TextInput
+          style={styles.input}
           placeholder="Username"
-          placeholderTextColor={colors.secondary}
+          placeholderTextColor={colors.primary}
         ></TextInput>
         <TextInput
           style={styles.input}
           placeholder="Password"
-          placeholderTextColor={colors.secondary}
+          placeholderTextColor={colors.primary}
         ></TextInput>
       </View>
 
       <View style={styles.buttonContainer}>
         {/* add onlick below */}
-        <Text style={{ fontFamily: "Helvetica" }}>Forgot password?</Text>
-        {/* add onlick below */}
         <View style={styles.buttonInnerContainter}>
-          <Text style={styles.buttonStyle}>Login</Text>
+          <Text style={styles.buttonStyle}>Create</Text>
         </View>
       </View>
 
       <View style={styles.footerContainer}>
         {/* add onlick below */}
-        <Text style={styles.footerText}>CREATE ACCOUNT</Text>
+        <Text style={styles.footerText}>Login</Text>
       </View>
     </SafeAreaView>
   );
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
     top: 30,
     fontSize: 35,
     fontFamily: "Helvetica",
-    color: colors.secondary,
+    color: colors.primary,
   },
   inputContainer: {
     flex: 2,
@@ -67,10 +71,10 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 2,
-    borderColor: colors.secondary,
+    borderColor: colors.primary,
     width: "70%",
     height: 40,
-    color: colors.secondary,
+    color: colors.primary,
   },
   buttonContainer: {
     flex: 1.7,
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   buttonInnerContainter: {
     width: "70%",
     height: 55,
-    borderColor: colors.secondary,
+    borderColor: colors.primary,
     borderWidth: 2,
     borderRadius: 25,
     justifyContent: "center",
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     fontWeight: "bold",
     fontSize: 20,
-    color: colors.secondary,
+    color: colors.primary,
   },
   footerContainer: {
     flex: 3,
@@ -101,8 +105,8 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     fontSize: 15,
     fontWeight: "bold",
-    color: colors.secondary,
+    color: colors.primary,
   },
 });
 
-export default LoginScreen;
+export default CreateAccountScreen;

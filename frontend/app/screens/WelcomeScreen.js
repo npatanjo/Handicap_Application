@@ -11,10 +11,7 @@ function WelcomeScreen(props) {
       style={styles.background}
       source={require("../assets/background.png")}
     >
-      <View
-        style={styles.loginButton}
-        onPress={() => NavigationContainer.navigate("Login")}
-      >
+      <View style={styles.loginButton} onPress={() => navigation.push("Login")}>
         <Text style={styles.textLog}>LOGIN</Text>
       </View>
       <View style={styles.createAccountButton}>
