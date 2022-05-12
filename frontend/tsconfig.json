@@ -7,7 +7,8 @@
             "@screens/*": ["screens/*"],
             "@components/*": ["components/*"],
             "@assets/*": ["assets/*"],
-            "@utilities/*": ["utilities/*"]
+            "@utilities/*": ["utilities/*"],
+            "@colors": ["utilities/Colors"]
         }
     }
 

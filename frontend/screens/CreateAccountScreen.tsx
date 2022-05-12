@@ -5,7 +5,7 @@
 import React, {useState} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import InputBar from '@components/loginItems/InputBar';
-import colors from "@utilities/Colors";
+import colors from "@colors";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation,CommonActions, useNavigationContainerRef } from '@react-navigation/native';

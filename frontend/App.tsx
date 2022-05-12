@@ -6,10 +6,19 @@ import SearchCourseScreen from '@screens/SearchCourseScreen';
 import SavedCourseScreen from '@screens/SavedCourseScreen';
 import AccoutScreen  from '@screens/AccountScreen';
 import LoginWrapperScreen from '@screens/LoginWrapperScreen';
-import colors from '@utilities/Colors';
+import colors from '@colors';
 //import { MaterialCommunityIcons } from '@expo/vector-icons';
 LogBox.ignoreLogs(["Syntax Error", "JSON Parse error: Unrecognized token"]);
 
+/** 
+ *  will be adding redux to this file, which will handle the state of the 
+ *  current users login status. 
+ *
+ *  @npatanjo I assume you will want to edit the following styles:
+ *            @screens/CreateAccountScreen.tsx
+ *            @screens/LoginScreen.tsx 
+ *            @components/loginItem/InputBar.tsx file
+ */
 export default function App() {
     const [index, setIndex] = useState(0);
 

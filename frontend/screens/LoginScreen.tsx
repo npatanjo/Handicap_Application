@@ -6,7 +6,7 @@
 import React, {useState} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import InputBar from '@components/loginItems/InputBar';
-import colors from "@utilities/Colors";
+import colors from "@colors";
 
 interface Props {
     navigation: any;

@@ -4,7 +4,7 @@
 
 import React, {useState} from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
-import colors from '@utilities/Colors';
+import colors from '@colors';
 
 interface Props {
     placeholder?: string;
