@@ -4,12 +4,12 @@
  */
 import React, {useState} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import InputBar from '@components/loginItems/InputBar';
-import colors from "@colors";
+import LoginInputBar from 'components/LoginInputBar';
+import colors from "colors";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation,CommonActions, useNavigationContainerRef } from '@react-navigation/native';
-import LoginScreen from "@screens/LoginScreen";
+import LoginScreen from "screens/LoginScreen";
 
 interface Props {
     navigation: any;
@@ -32,8 +32,8 @@ const CreateAccountScreen = ({navigation}: Props) => {
             <View style={styles.loginContainer}>
                 <Text style={styles.header}> Create Account</Text>
                 <View style={styles.inputContainer}>
-                    <InputBar placeholder={'username'}/>
-                    <InputBar placeholder={'password'} secureTextEntry={true} />
+                    <LoginInputBar placeholder={'username'}/>
+                    <LoginInputBar placeholder={'password'} secureTextEntry={true} />
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity 

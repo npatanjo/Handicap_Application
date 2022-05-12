@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/load_golfball_animation.json",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

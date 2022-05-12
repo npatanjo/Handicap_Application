@@ -5,8 +5,8 @@
 
 import React, {useState} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import InputBar from '@components/loginItems/InputBar';
-import colors from "@colors";
+import LoginInputBar from 'components/LoginInputBar';
+import colors from "colors";
 
 interface Props {
     navigation: any;
@@ -22,8 +22,8 @@ const LoginScreen = ({navigation}: Props) => {
         <View style={styles.container}>
             <View style={styles.loginContainer}>
                 <Text style={styles.header}> Account Login </Text>
-                <InputBar placeholder={'username'}/>
-                <InputBar placeholder={'password'} secureTextEntry={true}/>
+                <LoginInputBar placeholder={'username'}/>
+                <LoginInputBar placeholder={'password'} secureTextEntry={true}/>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button} 
