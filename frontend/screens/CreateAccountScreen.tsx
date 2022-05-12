@@ -4,12 +4,12 @@
  */
 import React, {useState} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import InputBar from '../components/loginItems/InputBar';
-import colors from "../utilities/Colors";
+import InputBar from '@components/loginItems/InputBar';
+import colors from "@utilities/Colors";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation,CommonActions, useNavigationContainerRef } from '@react-navigation/native';
-import LoginScreen from "./LoginScreen";
+import LoginScreen from "@screens/LoginScreen";
 
 interface Props {
     navigation: any;

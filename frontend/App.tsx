@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { LogBox } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 import { StyleSheet, Text, View } from 'react-native';
-import SearchCourseScreen from './screens/SearchCourseScreen';
-import SavedCourseScreen from './screens/SavedCourseScreen';
-import AccoutScreen  from './screens/AccountScreen';
-import LoginWrapperScreen from './screens/LoginWrapperScreen';
-import colors from './utilities/Colors';
+import SearchCourseScreen from '@screens/SearchCourseScreen';
+import SavedCourseScreen from '@screens/SavedCourseScreen';
+import AccoutScreen  from '@screens/AccountScreen';
+import LoginWrapperScreen from '@screens/LoginWrapperScreen';
+import colors from '@utilities/Colors';
 //import { MaterialCommunityIcons } from '@expo/vector-icons';
 LogBox.ignoreLogs(["Syntax Error", "JSON Parse error: Unrecognized token"]);
 
