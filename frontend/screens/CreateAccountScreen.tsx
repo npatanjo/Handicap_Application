@@ -15,6 +15,7 @@ import {
   useNavigationContainerRef,
 } from "@react-navigation/native";
 import LoginScreen from "screens/LoginScreen";
+import fonts from "utilities/Fonts";
 
 interface Props {
   navigation: any;
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontFamily: fonts.primary,
     color: colors.primary,
     marginBottom: 30,
   },
@@ -157,11 +158,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.primary,
     fontSize: 15,
+    fontFamily: fonts.primary,
   },
   loginButtonText: {
     fontSize: 18,
     color: colors.primary,
     fontWeight: "bold",
+    fontFamily: fonts.primary,
   },
 });
 
