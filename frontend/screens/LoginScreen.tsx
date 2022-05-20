@@ -1,5 +1,5 @@
 /**
- * @author Nick Donfris
+ * @author Nate Patanjo, Nick Donfris
  *
  */
 
@@ -20,8 +20,8 @@ const LoginScreen = ({ navigation }: Props) => {
     <View style={styles.container}>
       <View style={styles.loginContainer}>
         <Text style={styles.header}> Account Login </Text>
-        <LoginInputBar placeholder={"username"} />
-        <LoginInputBar placeholder={"password"} secureTextEntry={true} />
+        <LoginInputBar placeholder={"Username"} />
+        <LoginInputBar placeholder={"Password"} secureTextEntry={true} />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -29,6 +29,8 @@ const LoginScreen = ({ navigation }: Props) => {
           >
             <Text style={styles.buttonText}>login</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("Create Account")}
