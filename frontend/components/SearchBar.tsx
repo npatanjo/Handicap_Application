@@ -10,10 +10,15 @@ import {
   FlatList,
 } from "react-native";
 
-export default function SearchBar(props) {
-  const { source } = props;
+interface Props {
+    source: any[];
+    onPress: () => void;
+}
+
+
+export default function SearchBar({source, onPress}: Props) {
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <View>
         {source.length ? (
           source.map((item) => {
