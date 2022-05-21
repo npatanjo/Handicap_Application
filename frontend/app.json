@@ -6,7 +6,11 @@
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
+<<<<<<< HEAD
       "image": "./app/assets/splash.png",
+=======
+      "image": "./assets/load_golfball_animation.json",
+>>>>>>> frontend
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

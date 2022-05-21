@@ -1,0 +1,18 @@
+{
+    "esModuleInterop": true,
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "baseUrl":".",
+        "paths": {
+            "screens/*": ["screens/*"],
+            "components/*": ["components/*"],
+            "assets/*": ["assets/*"],
+            "utilities/*": ["utilities/*"],
+            "colors": ["utilities/Colors.tsx"]
+        },
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "importHelpers": true,
+        "strict": true
+    }
+}
