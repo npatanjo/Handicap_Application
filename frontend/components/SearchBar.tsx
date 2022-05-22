@@ -8,33 +8,38 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  Button,
 } from "react-native";
 
 interface Props {
-    source: any[];
-    onPress: () => void;
+  placeholder: string;
+  source: any[];
+  onPress: () => void;
 }
 
+export default function SearchBar({ placeholder }: Props) {
+  const [text, setText] = useState("");
 
-export default function SearchBar({source, onPress}: Props) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <View style={styles.container}>
       <View>
-        {source.length ? (
-          source.map((item) => {
-            return (
-              <View>
-                <Text>{item}</Text>
-              </View>
-            );
-          })
-        ) : (
-          <View>
-            <Text>Golf course not on record</Text>
-          </View>
-        )}
+        <TextInput
+          placeholder={placeholder}
+          onChangeText={(text) => {
+            setText(text);
+          }}
+        />
       </View>
-    </TouchableOpacity>
+
+      <View>
+        <Button
+          title="search"
+          onPress={() => {
+            console.log(text);
+          }}
+        />
+      </View>
+    </View>
   );
 }
 
