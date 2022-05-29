@@ -25,6 +25,42 @@ ___
 }
 ```
 
+---
+
+### BASIC SEARCH FUNCTIONALITY
+Heres how a basic component architecture should look.
+
+| variable  | description  |
+| --- | --- |
+| results | array of our golf courses found from backend search |
+| searchFunction  | call to backend api when the search is requested |
+| source  | ? |
+
+```typescript
+function Searchpage({}: Props) {
+    const [results, setResults] = useState([] as GolfCourse[]);
+
+    useEffect(() => {
+       // some type of loading animation, because this will be called 
+       // any time searchFunciton is called to change the result list
+    }, [results])
+
+    const searchFunction = async () => {
+        try {
+            const results: GolfCourse[] = await backendCall();
+            setResults(results);
+        } catch (e) {
+            // backend call error
+        }
+    }
+
+    return (
+        <SearchBar source={...} onPress={searchFunction} />
+        <SearchResults results={results} />
+    );
+
+}
+```
 ___
 
 #### NATE TODO:
