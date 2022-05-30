@@ -1,3 +1,9 @@
+/**
+ *
+ * @author Nate Patnjo
+ *
+ */
+
 import http from 'http';
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -6,10 +12,33 @@ import config from './config/config';
 import mongoose from 'mongoose';
 import userRoutes from './routes/users';
 
+/**
+ *
+ * determains where our logs are coming from
+ *
+ * @constant {string} NAMESPACE
+ *
+ */
 const NAMESPACE = 'Server';
+
+/**
+ *
+ * defines behavior
+ *
+ * @constant app
+ *
+ */
 const app = express();
 
-/**  Connect to Mongo */
+/**
+ *
+ * @todo should be changed to grab from config file as opposed to direct
+ * input
+ *
+ * @purpose connect to mongo
+ *
+ */
+
 /**mongoose
     .connect(config.mongo.url, config.mongo.options)
     .then((result) => {
@@ -29,7 +58,11 @@ mongoose
         logging.error(NAMESPACE, error.message, error);
     });
 
-/** Log the request */
+/**
+ *
+ * @purpose logging all requests
+ *
+ */
 app.use((req, res, next) => {
     /** Log the req */
     logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
@@ -42,11 +75,30 @@ app.use((req, res, next) => {
     next();
 });
 
-/** Parse the body of the request */
+/**
+ *
+ * allows the use of nested json for later use
+ * @purpose parsing the requests
+ *
+ */
 app.use(bodyParser.urlencoded({ extended: true }));
+
+/**
+ *
+ * takes care of json parsing and stringfy on the frontend
+ * @purpose parsing the requests
+ *
+ */
 app.use(bodyParser.json());
 
-/** Rules of our API */
+/**
+ *
+ * allows for PUT, POST, PATCH, DELETE, and GET
+ *
+ * @todo currently allows any origin. must be changed later
+ * @purpose rules for API
+ *
+ */
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -59,14 +111,25 @@ app.use((req, res, next) => {
     next();
 });
 
-/** Authentication --> later move to routes for style */
-
-// app.post('/login')
-
-/** Routes go here */
+/**
+ *
+ * @purpose routes
+ *
+ */
 app.use('/api/users', userRoutes);
 
-/** Error handling */
+/**
+ *
+ * error handling
+ *
+ * @returns {status code} request not found: 404
+ *
+ * todo
+ * @returns {status code} - : 405
+ * @returns {status code} - : 400
+ * todo
+ *
+ */
 app.use((req, res, next) => {
     const error = new Error('Not found');
 
@@ -76,7 +139,13 @@ app.use((req, res, next) => {
 });
 
 /** create server: to start server: yarn serve*/
-
+/**
+ *
+ * @purpose creates server
+ * @usage starting server: yarn serve
+ *
+ *
+ */
 const httpServer = http.createServer(app);
 
 httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));
