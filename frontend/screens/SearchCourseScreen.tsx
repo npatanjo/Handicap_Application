@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import React, { useMemo, useState } from "react";
+import { View, StyleSheet, Keyboard } from "react-native";
 import SearchBar from "components/SearchBar";
+import { SearchQueryContext } from "utilities/SearchContext";
 
-interface Props {}
+// MOVE STATE INTO HERE
+// export const SearchContext = React.createContext(null);
 
 /**
 * SearchCourseScreen - Contains a SearchBar, and A ResultList. API calls will
@@ -16,28 +18,57 @@ interface Props {}
 * @param {Props} props - N/A (potential styling?)
 * @returns {React.JSX}
 */
-const SearchCourseScreen = ({}: Props) => {
+export default function SearchCourseScreen(){
     const [source] = useState(["tilden", "pebble beach", "augusta"]); // later will become database
 
-    const [filtered, setFiltered] = useState(source);
+    const [filter, setFilter] = useState(source);
 
-    const [query, setQuery] = useState("");
-    const [searching, setSearching] = useState(true);
+    const [query, setQuery] = useState("Search for a course");
 
+    const [results, setResults] = useState([]);
+
+    const [searching, setSearching] = useState(false);
+
+
+    const queryValue = useMemo(
+        () => ({query, setQuery}),
+        [query]
+    );
+
+    //const filterValues = useMemo(
+    //    () => ({filter, setFilter}),
+    //    [filter]
+    //);
+
+    //const resultValues = useMemo(
+    //    () => ({results, setResults}),
+    //    [results]
+    //);
 
     const onSearch = () => {
+        setSearching(!searching);
+        Keyboard.dismiss();
+        try {
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setSearching(false);
+        }
     };
 
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
+            <SearchQueryContext.Provider value={queryValue}>
                 <SearchBar
-                    query={query}
-                    setQuery={text => setQuery(text)}
                     onSearch={onSearch}
-                    placeholder={"Search"}
+                    placeholder={"Search for a Course"}
                 />
-            </View>
+            </SearchQueryContext.Provider>
+            {/* 
+            <SearchQueryContext.Provider value={filteredValue}>
+                     <ResultList /> 
+            </SearchQueryContext.Provider> 
+            */}
         </View>
     );
 };
@@ -55,4 +86,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SearchCourseScreen;

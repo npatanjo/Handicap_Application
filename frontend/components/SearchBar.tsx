@@ -1,12 +1,11 @@
-import React from "react";
+import { useContext } from 'react';
 import { View, StyleSheet, TextInput } from "react-native";
 import colors from 'utilities/Colors';
+import {SearchQueryContext} from 'utilities/SearchContext';
 
 interface Props {
-    query: string;
-    setQuery: (arg0:string) => void;
     onSearch: () => void;
-    placeholder?: string;
+    placeholder: string;
 }
 
 /**
@@ -20,7 +19,9 @@ interface Props {
  * @param {string} placeholder - initial query before user input
  * @returns {JSX.Element} Generic SearchBar 
  */
-export default function SearchBar({query, setQuery, onSearch, placeholder}: Props) {
+export default function SearchBar({onSearch, placeholder}: Props) {
+
+    const { query, setQuery } = useContext(SearchQueryContext);
 
     return (
         <View style={styles.wrapperContainer}>
@@ -31,7 +32,7 @@ export default function SearchBar({query, setQuery, onSearch, placeholder}: Prop
                     onChangeText={setQuery}
                     onSubmitEditing={onSearch}
                     placeholder={placeholder}
-                    placeholderTextColor={"#fff"}
+                    placeholderTextColor={colors.white}
                     returnKeyType={"search"}
                 />
             </View>
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         color: colors.white,
         width: '80%',
-        paddingTop: '15%',
+        padding: '5%',
         marginTop: '15%',
         borderRadius: 15,
         fontSize: 15,
@@ -61,3 +62,4 @@ const styles = StyleSheet.create({
         color: colors.white,
     }
 });
+

@@ -1,3 +1,82 @@
+## [useContext](https://www.youtube.com/watch?v=lhMKvyLRWo0&t=7s)
+* looks like the provider/subscriber pattern
+* I guess it basically is the provider/subscriber pattern
+* below example has three files:
+    * _User_ Context, initializes the state, 
+    * _User_ Provider, is some wrapper class that can potentially update the _User_
+    * _User_ Subscriber, is a component that subscribes to the _User_ Provider
+
+--- 
+
+```typescriptreact
+// UserContext.tsx
+import { createContext, useContext } from 'react';
+
+export interface User {
+    name: "John";
+    age: number;
+}
+
+export const UserContext = createContext<User | null>(null);
+// User described later
+```
+
+--- 
+
+```typescriptreact
+// UserProvider.tsx
+import { UserContext } from './UserContext';
+import { useState } from 'react';
+
+export const UserProvider = ({}) => {
+  const [age, setAge] = useState(0);
+
+  // useMemo is similiar to useEffect, and
+  // will be called every time the state changes
+  const providerValue = useMemo(() => ({
+    age,
+    setAge,
+  }), [age, setAge]);
+
+  return (
+    <UserContext.Provider value={{ age, setAge }}>
+       <Text>You are {age} years old</Text>
+       <UserSubscriber />
+    </UserContext.Provider>
+  );
+};
+```
+
+--- 
+
+```typescriptreact
+// UserSubscriber.tsx
+import { UserContext } from './UserContext';
+
+export default function UserSubscriber() {
+    const { age, setAge } = useContext(UserContext);
+    
+    return (
+        <View>
+            <Text>{age}</Text>
+            <button onClick={() => setAge(age + 1)}>+</button>
+        </View>
+    );
+}
+
+```
+
+
+---
+### Adding Complexity To The Example 
+* would require us to change the _User_ to have multiple fields
+* these fields could then be treated as a single __object__
+* However, they would be retreived by destructuring the __object__
+
+--- 
+## React-Native Async Storage 
+
+---
 
 ## REDUX TOOLKIT
 
