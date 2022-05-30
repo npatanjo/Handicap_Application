@@ -7,34 +7,18 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "components/SearchBar";
+/*
+temp using the json backing file. For testing pre database integration
+*/
+const data = require("../BACKING_FILE.json");
 
 interface Props {}
 
 const SearchCourseScreen = ({}: Props) => {
-  const [source] = useState(["tilden", "pebble beach", "augusta"]); //later will become database
-  const [filtered, setFiltered] = useState(source);
-  const [searching, setSearching] = useState(false);
-  const onSearch = (text) => {
-    if (text) {
-      setSearching(true);
-      const temp = text.toLowerCase();
-
-      const tempList = source.filter((item) => {
-        if (item.match(temp)) return item;
-      });
-      setFiltered(tempList);
-    } else {
-      setSearching(false);
-      setFiltered(source);
-    }
-  };
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Search Courses"></TextInput>
-      {searching && (
-        <SearchBar onPress={() => setSearching(false)} source={filtered} />
-      )}
+      <SearchBar placeholder={"search"}></SearchBar>
     </View>
   );
 };

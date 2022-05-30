@@ -9,6 +9,8 @@ interface Props {
     placeholder: string;
 }
 
+export default function SearchBar({ placeholder }: Props) {
+  const [text, setText] = useState("");
 
 /**
  * SearchBar 
