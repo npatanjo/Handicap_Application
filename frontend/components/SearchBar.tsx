@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { View, StyleSheet, TextInput } from "react-native";
 import colors from 'utilities/Colors';
-import {SearchQueryContext} from 'utilities/SearchContext';
+import {SearchQueryContext} from 'contexts/SearchContext';
 
 interface Props {
     onSearch: () => void;

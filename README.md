@@ -69,7 +69,14 @@ ___
 * Link figma
 
 
-#### NICK TODO: 
+#### NICK TODO [ __NEW__ ]: 
+* Add filter to searchbar and implement results components
+* Finish Log-In API using rn-async storage
+* Fix error with search results using spread operator
+* Create union-type of context types for wrapping multiple components
+* Research reducer hook
+* Decomp Splash Screen to a have animation in external component
+___
 * Redux 
 * Postgres?
 * Add Login Api

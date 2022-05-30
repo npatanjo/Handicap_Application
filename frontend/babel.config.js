@@ -13,7 +13,8 @@ module.exports = function(api) {
                         assets: "./assets",
                         utilities: "./utilities",
                         colors: "./utilities/Colors.tsx",
-                        state: "./state"
+                        state: "./state",
+                        contexts: "./contexts",
                     },
                     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
                 }

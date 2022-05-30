@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { View, StyleSheet, Keyboard } from "react-native";
 import SearchBar from "components/SearchBar";
-import { SearchQueryContext } from "utilities/SearchContext";
+import { SearchQueryContext } from "contexts/SearchContext";
+import SearchBarResults from "components/SearchBarResults";
+import BackingFile from "../BACKING_FILE.json";
+import {GolfCourse} from "utilities/GolfCourse";
+import colors from "utilities/Colors";
 
 // MOVE STATE INTO HERE
 // export const SearchContext = React.createContext(null);
@@ -23,11 +27,11 @@ export default function SearchCourseScreen(){
 
     const [filter, setFilter] = useState(source);
 
-    const [query, setQuery] = useState("Search for a course");
+    const [query, setQuery] = useState("");
 
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState<GolfCourse[]>([]);
 
-    const [searching, setSearching] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const queryValue = useMemo(
@@ -45,14 +49,43 @@ export default function SearchCourseScreen(){
     //    [results]
     //);
 
-    const onSearch = () => {
-        setSearching(!searching);
+    const parseFile = async () : Promise<GolfCourse[]> => {
         Keyboard.dismiss();
+        let courses : GolfCourse[] = [];
         try {
+            for (var i in BackingFile) {
+                const course: GolfCourse = BackingFile[i];
+                if (course !== undefined || course !== null) {
+                    courses.push(course);
+                }
+            }
         } catch (e) {
             console.log(e);
         } finally {
-            setSearching(false);
+            return courses;
+        }
+    };
+
+    const onSearch = async () : Promise<void> => {
+        if (query.trim() === "") {
+            return;
+        }
+        setLoading(true);
+        try {
+            let courses: GolfCourse[] = [];
+            setResults([]);
+            courses = await parseFile();
+
+
+            courses.forEach(course => {
+                if (course.course_name.toLowerCase().includes(query.toLowerCase())) {
+                    setResults( [...results, course] );
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -64,6 +97,9 @@ export default function SearchCourseScreen(){
                     placeholder={"Search for a Course"}
                 />
             </SearchQueryContext.Provider>
+            <View style={styles.results}>
+                <SearchBarResults results={results} loading={loading} />
+            </View>
             {/* 
             <SearchQueryContext.Provider value={filteredValue}>
                      <ResultList /> 
@@ -83,6 +119,13 @@ const styles = StyleSheet.create({
         height: '10%',
         width: "100%",
         color: '#fff',
+        marginBottom: "15%",
+    },
+    results: {
+        width: "90%",
+        height: "80%",
+        justifyContent: "center",
+        textAlign: "center",
     }
 });
 
