@@ -63,10 +63,9 @@ function Searchpage({}: Props) {
 ```
 ___
 
-#### NATE TODO:
-* Make port branch
-* LMK what apis you add to backend
-* Link figma
+#### NATE TODO [ __NEW__ ]:
+* finish RESTful API for the users
+* make RESTful API for golf courses
 
 
 #### NICK TODO [ __NEW__ ]: 
