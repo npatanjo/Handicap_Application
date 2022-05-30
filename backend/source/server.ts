@@ -1,36 +1,33 @@
 import http from 'http';
-import bodyParser from 'body-parser';
 import express from 'express';
+import bodyParser from 'body-parser';
 import logging from './config/logging';
 import config from './config/config';
-import mongoose from 'mongoose';
-import userRoutes from './routes/users';
 
+/**
+ *
+ * determains where our logs are coming from
+ *
+ * @constant {string} NAMESPACE
+ *
+ */
 const NAMESPACE = 'Server';
-const app = express();
 
-/**  Connect to Mongo */
-/**mongoose
-    .connect(config.mongo.url, config.mongo.options)
-    .then((result) => {
-        logging.info(NAMESPACE, 'Mongo Connected');
-    })
-    .catch((error) => {
-        logging.error(NAMESPACE, error.message, error);
-    });
-    */
+/**
+ *
+ * defines behavior
+ *
+ * @constant router
+ *
+ */
+const router = express();
 
-mongoose
-    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
-    .then((result) => {
-        logging.info(NAMESPACE, 'Mongo Connected');
-    })
-    .catch((error) => {
-        logging.error(NAMESPACE, error.message, error);
-    });
-
-/** Log the request */
-app.use((req, res, next) => {
+/**
+ *
+ * @purpose logging all requests
+ *
+ */
+router.use((req, res, next) => {
     /** Log the req */
     logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
@@ -42,12 +39,31 @@ app.use((req, res, next) => {
     next();
 });
 
-/** Parse the body of the request */
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+/**
+ *
+ * allows the use of nested json for later use
+ * @purpose parsing the requests
+ *
+ */
+router.use(bodyParser.urlencoded({ extended: false }));
 
-/** Rules of our API */
-app.use((req, res, next) => {
+/**
+ *
+ * takes care of json parsing and stringfy on the frontend
+ * @purpose parsing the requests
+ *
+ */
+router.use(bodyParser.json());
+
+/**
+ *
+ * allows for PUT, POST, PATCH, DELETE, and GET
+ *
+ * @todo currently allows any origin. must be changed later
+ * @purpose rules for API
+ *
+ */
+router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
@@ -59,24 +75,34 @@ app.use((req, res, next) => {
     next();
 });
 
-/** Authentication --> later move to routes for style */
+/**
+ *
+ * error handling
+ *
+ * @returns {status code} request not found: 404
+ *
+ * todo
+ * @returns {status code} - : 405
+ * @returns {status code} - : 400
+ * todo
+ *
+ */
 
-// app.post('/login')
+router.use((req, res, next) => {
+    const error = new Error('not found');
 
-/** Routes go here */
-app.use('/api/users', userRoutes);
-
-/** Error handling */
-app.use((req, res, next) => {
-    const error = new Error('Not found');
-
-    res.status(404).json({
+    return res.status(404).json({
         message: error.message
     });
 });
 
-/** create server: to start server: yarn serve*/
-
-const httpServer = http.createServer(app);
+/**
+ *
+ * @purpose creates server
+ *
+ *
+ *
+ */
+const httpServer = http.createServer(router);
 
 httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));
