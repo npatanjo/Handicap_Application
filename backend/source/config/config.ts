@@ -15,7 +15,6 @@ dotenv.config();
  * @constant {string} SERVER_HOSTNAME
  */
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
-
 /**
  *
  * the port from .env - if the port does not exist it will defailt to 1337

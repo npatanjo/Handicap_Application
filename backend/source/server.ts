@@ -1,6 +1,7 @@
 import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 import logging from './config/logging';
 import config from './config/config';
 
@@ -21,6 +22,23 @@ const NAMESPACE = 'Server';
  *
  */
 const router = express();
+
+/**
+ *
+ * @todo should be changed to grab from config file as opposed to direct
+ * input
+ *
+ * @purpose connect to mongo
+ *
+ */
+mongoose
+    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
+    .then((result) => {
+        logging.info(NAMESPACE, 'Mongo Connected');
+    })
+    .catch((error) => {
+        logging.error(NAMESPACE, error.message, error);
+    });
 
 /**
  *
@@ -45,7 +63,7 @@ router.use((req, res, next) => {
  * @purpose parsing the requests
  *
  */
-router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.urlencoded({ extended: true }));
 
 /**
  *
