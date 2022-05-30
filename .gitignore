@@ -2,3 +2,4 @@ my_env
 node_modules/
 .expo/
 .DS_Store
+build/
