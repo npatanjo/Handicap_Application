@@ -1,45 +1,59 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import React from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+import colors from 'utilities/Colors';
 
 interface Props {
-    source: any[];
-    onPress: () => void;
+    query: string;
+    setQuery: () => void;
+    onSearch: () => void;
+    placeholder: string;
 }
 
 
-export default function SearchBar({source, onPress}: Props) {
-  return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
-      <View>
-        {source.length ? (
-          source.map((item) => {
-            return (
-              <View>
-                <Text>{item}</Text>
-              </View>
-            );
-          })
-        ) : (
-          <View>
-            <Text>Golf course not on record</Text>
-          </View>
-        )}
-      </View>
-    </TouchableOpacity>
-  );
+/**
+ * SearchBar 
+ *
+ * NOTE: it is likely that onSearch will need to be updated once we get further on the api
+ *
+ * @param {string} query - string that is changed during typing
+ * @param {() => void} setQuery - setter variable for the query prop
+ * @param {() => void} onSearch - async function to backend 
+ * @param {string} placeholder - initial query before user input
+ * @returns {JSX.Element} Generic SearchBar 
+ */
+export default function SearchBar({query, setQuery, onSearch, placeholder}: Props) {
+
+    return (
+        <View style={ styles.wrapperContainer }>
+            <View style={styles.barContainer}>
+                <TextInput 
+                    style={styles.textContainer}
+                    value={query}
+                    onChangeText={setQuery}
+                    onSubmitEditing={onSearch}
+                    placeholder={placeholder}
+                />
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+    wrapperContainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    barContainer: {
+        width: '90%',
+        height: '8%',
+        backgroundColor: colors.primary,
+    },
+    textContainer: {
+        color: colors.white,
+        paddingLeft: 10,
+        paddingRight: 10,
+        justifyContent: "space-around",
+        textAlign: "center",
+    }
 });
