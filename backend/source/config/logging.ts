@@ -1,3 +1,9 @@
+/**
+ *
+ * @author Nate Patnjo
+ *
+ */
+
 const info = (namespace: string, message: string, object?: any) => {
     if (object) {
         console.info(`[${getTimeStamp()}] [INFO] [${namespace}] ${message}`, object);

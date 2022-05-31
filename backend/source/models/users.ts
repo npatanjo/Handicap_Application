@@ -1,3 +1,9 @@
+/**
+ *
+ * @author Nate Patnjo
+ *
+ */
+
 import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 import logging from '../config/logging';

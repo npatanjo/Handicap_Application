@@ -1,3 +1,9 @@
+/**
+ *
+ * @author Nate Patnjo
+ *
+ */
+
 import dotenv from 'dotenv';
 
 dotenv.config();

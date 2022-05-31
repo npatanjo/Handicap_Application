@@ -1,14 +1,20 @@
+/**
+ *
+ * @author Nate Patnjo
+ *
+ */
+
 import express from 'express';
-import { createUser } from '../controllers/users';
-import { getAllUsers } from '../controllers/users';
-import { authenticateUser } from '../controllers/users';
+import { createUser, getAllUsers, authenticateUser, putUser, deleteUser } from '../controllers/users';
 
 const router = express.Router();
 
-router.post('/add/user', createUser);
-router.get('/get/users', getAllUsers);
+router.post('/add', createUser);
+router.get('/get', getAllUsers);
+router.put('/put', putUser);
+router.delete('/delete/:u', deleteUser);
 
-// for authentication. 
+// for authentication.
 router.get('/login', authenticateUser);
 
 export = router;
