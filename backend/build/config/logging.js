@@ -1,4 +1,9 @@
 "use strict";
+/**
+ *
+ * @author Nate Patnjo
+ *
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const info = (namespace, message, object) => {
     if (object) {
