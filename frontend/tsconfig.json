@@ -9,7 +9,8 @@
             "assets/*": ["assets/*"],
             "utilities/*": ["utilities/*"],
             "colors": ["utilities/Colors.tsx"],
-            "contexts/*": ["contexts/*"]
+            "contexts/*": ["utilities/contexts/*"],
+            "reducers/*": ["utilities/reducers/*"]
         },
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,

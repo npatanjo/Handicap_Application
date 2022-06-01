@@ -14,7 +14,8 @@ module.exports = function(api) {
                         utilities: "./utilities",
                         colors: "./utilities/Colors.tsx",
                         state: "./state",
-                        contexts: "./contexts",
+                        contexts: "./utilities/contexts",
+                        reducers: "./utilities/reducers",
                     },
                     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
                 }

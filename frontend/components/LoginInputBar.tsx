@@ -7,13 +7,13 @@ import { View, StyleSheet, TextInput } from "react-native";
 import colors from "colors";
 
 interface Props {
-  placeholder?: string;
-  secureTextEntry?: boolean;
+    value?: string;
+    setValue?: (text: string) => void;
+    placeholder?: string;
+    secureTextEntry?: boolean;
 }
 
-export default function LoginInputBar({ placeholder, secureTextEntry }: Props) {
-  const [value, setValue] = useState("");
-
+export default function LoginInputBar({ value, setValue, placeholder, secureTextEntry }: Props) {
   return (
     <View style={styles.container}>
       <TextInput
@@ -21,7 +21,7 @@ export default function LoginInputBar({ placeholder, secureTextEntry }: Props) {
         placeholder={placeholder}
         placeholderTextColor={colors.primary}
         secureTextEntry={secureTextEntry || false}
-        onChangeText={(text) => setValue(text)}
+        onChangeText={setValue}
         value={value}
       />
     </View>

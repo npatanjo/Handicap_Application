@@ -20,8 +20,8 @@ const LoginScreen = ({ navigation }: Props) => {
     <View style={styles.container}>
       <View style={styles.loginContainer}>
         <Text style={styles.header}> Account Login </Text>
-        <LoginInputBar placeholder={"Username"} />
-        <LoginInputBar placeholder={"Password"} secureTextEntry={true} />
+        <LoginInputBar placeholder={"Username"} value={username} setValue={(text)=>{setUsername(text)}} />
+        <LoginInputBar placeholder={"Password"} value={username} setValue={(text)=>{setUsername(text)}} secureTextEntry={true} />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
