@@ -11,6 +11,7 @@ import logging from './config/logging';
 import config from './config/config';
 import mongoose from 'mongoose';
 import userRoutes from './routes/users';
+import courseRoutes from './routes/courses';
 
 /**
  *
@@ -117,6 +118,7 @@ app.use((req, res, next) => {
  *
  */
 app.use('/api/users', userRoutes);
+app.use('/api/courses', courseRoutes);
 
 /**
  *
