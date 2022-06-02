@@ -6,9 +6,7 @@ def main():
 
     data = json.load(f)
 
-
     for i in range(0, 2):
-        formatted = str(data)
-        os.system("curl -X -d %s http://localhost:1337/api/courses/post" % formatted)
+        os.system("curl -X -H 'Content-Type: application/json' -d '%s' http://localhost:1337/api/courses/post" % data)
 
 main()
