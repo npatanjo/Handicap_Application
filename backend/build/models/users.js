@@ -20,9 +20,10 @@ const logging_1 = __importDefault(require("../config/logging"));
  *
  */
 const UserSchema = new mongoose_2.Schema({
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    gender: { type: String, required: true }
+    gender: { type: String, required: true },
+    token: { type: String, required: true }
 }, {
     /**
      * creates a time stamp on the collection

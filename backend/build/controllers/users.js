@@ -8,7 +8,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.putUser = exports.authenticateUser = exports.getAllUsers = exports.createUser = void 0;
+exports.updatePassword = exports.getUsersByName = exports.deleteUser = exports.authenticateUser = exports.getAllUsers = exports.createUser = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const users_1 = __importDefault(require("../models/users"));
 /**
@@ -21,12 +21,13 @@ const users_1 = __importDefault(require("../models/users"));
  *
  */
 const createUser = (req, res, next) => {
-    let { username, password, gender } = req.body;
+    let { username, password, gender, token } = req.body;
     const user = new users_1.default({
         _id: new mongoose_1.default.Types.ObjectId(),
         username,
         password,
-        gender
+        gender,
+        token
     });
     return user
         .save()
@@ -43,10 +44,6 @@ const createUser = (req, res, next) => {
     });
 };
 exports.createUser = createUser;
-const putUser = (req, res, next) => {
-    return req.body;
-};
-exports.putUser = putUser;
 /**
  *
  * @param req
@@ -54,7 +51,6 @@ exports.putUser = putUser;
  * @param next
  */
 const deleteUser = (req, res, next) => {
-    console.log('TLDKJFLSKDJF');
     let u = req.params.u;
     console.log(u);
     users_1.default.findOneAndRemove({ username: u })
@@ -95,5 +91,37 @@ const getAllUsers = (req, res, next) => {
     });
 };
 exports.getAllUsers = getAllUsers;
+const getUsersByName = (req, res, next) => {
+    users_1.default.findOne({ username: req.params.u })
+        .exec()
+        .then((results) => {
+        return res.status(200).json({
+            users: results
+        });
+    })
+        .catch((error) => {
+        return res.status(500).json({
+            message: error.message,
+            error
+        });
+    });
+};
+exports.getUsersByName = getUsersByName;
+const updatePassword = (req, res, next) => {
+    users_1.default.findOneAndUpdate({ username: req.params.u }, { password: req.params.p })
+        .exec()
+        .then((results) => {
+        return res.status(200).json({
+            message: `Password for ${req.params.u} successfully changed`
+        });
+    })
+        .catch((error) => {
+        return res.status(500).json({
+            message: error.message,
+            error
+        });
+    });
+};
+exports.updatePassword = updatePassword;
 const authenticateUser = (req, res, next) => { };
 exports.authenticateUser = authenticateUser;

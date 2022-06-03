@@ -15,6 +15,7 @@ const logging_1 = __importDefault(require("./config/logging"));
 const config_1 = __importDefault(require("./config/config"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const users_1 = __importDefault(require("./routes/users"));
+const courses_1 = __importDefault(require("./routes/courses"));
 /**
  *
  * determains where our logs are coming from
@@ -49,7 +50,7 @@ const app = (0, express_1.default)();
     });
     */
 mongoose_1.default
-    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config_1.default.mongo.options)
+    .connect('mongodb+srv://dev:gnu@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config_1.default.mongo.options)
     .then((result) => {
     logging_1.default.info(NAMESPACE, 'Mongo Connected');
 })
@@ -107,6 +108,7 @@ app.use((req, res, next) => {
  *
  */
 app.use('/api/users', users_1.default);
+app.use('/api/courses', courses_1.default);
 /**
  *
  * error handling
