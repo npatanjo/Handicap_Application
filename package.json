@@ -7,7 +7,7 @@
     "serve": "nodemon backend/source/server.ts"
   },
   "engines": {
-    "node": "18x"
+    "node": "18.x"
   },
   "author": "Nate Patanjo",
   "license": "MIT",
