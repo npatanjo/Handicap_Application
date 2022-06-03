@@ -20,9 +20,10 @@ import { ObjectId } from 'mongodb';
  */
 const UserSchema: Schema = new Schema(
     {
-        username: { type: String, required: true },
+        username: { type: String, required: true, unique: true },
         password: { type: String, required: true },
-        gender: { type: String, required: true }
+        gender: { type: String, required: true },
+        token: { type: String, required: true }
     },
     {
         /**

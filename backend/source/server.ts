@@ -11,6 +11,7 @@ import logging from './config/logging';
 import config from './config/config';
 import mongoose from 'mongoose';
 import userRoutes from './routes/users';
+import courseRoutes from './routes/courses';
 
 /**
  *
@@ -50,7 +51,7 @@ const app = express();
     */
 
 mongoose
-    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
+    .connect('mongodb+srv://dev:gnu@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
     .then((result) => {
         logging.info(NAMESPACE, 'Mongo Connected');
     })
@@ -117,6 +118,7 @@ app.use((req, res, next) => {
  *
  */
 app.use('/api/users', userRoutes);
+app.use('/api/courses', courseRoutes);
 
 /**
  *

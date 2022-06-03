@@ -5,14 +5,15 @@
  */
 
 import express from 'express';
-import { createUser, getAllUsers, authenticateUser, putUser, deleteUser } from '../controllers/users';
+import { createUser, getAllUsers, authenticateUser, deleteUser, getUsersByName, updatePassword } from '../controllers/users';
 
 const router = express.Router();
 
 router.post('/add', createUser);
-router.get('/get', getAllUsers);
-router.put('/change/password', putUser);
-router.delete('/delete/:u', deleteUser);
+router.get('/get/all', getAllUsers);
+router.get('/get/by/username/:u', getUsersByName);
+router.put('/change/password/:u/:p', updatePassword);
+router.delete('/delete/user/:u', deleteUser);
 
 // for authentication.
 router.get('/login', authenticateUser);
