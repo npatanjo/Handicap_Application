@@ -40,10 +40,10 @@ export default function App() {
       */
     const [routes] = useState([
         {key: "login", title: "login", icon: "login", color: colors.primary },
-        {key: "search",itle: "Search",con: "golf-cart",olor: colors.yellow},
+        {key: "search", title: "Search",icon: "golf-cart",color: colors.yellow},
         {key: "saved", title: "Saved", icon: "golf", color: colors.primary },
-        {key: "account",itle: "Browse",con: "account",olor: colors.primary},
-        {key: "splash",itle: "splash",con: "loading",olor: colors.primary}
+        {key: "account", title: "Browse",icon: "account",color: colors.primary},
+        {key: "splash", title: "splash", icon: "loading",color: colors.primary}
     ]);
 
     /* maps the state to the actual page route */

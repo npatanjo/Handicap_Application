@@ -1,10 +1,11 @@
-import { useContext } from 'react';
-import { View, StyleSheet, TextInput } from "react-native";
+import React, { useContext } from 'react';
+import { View, StyleSheet, KeyboardAvoidingView, TextInput } from "react-native";
 import colors from 'utilities/Colors';
 import {SearchQueryContext} from 'contexts/SearchContext';
 
 interface Props {
     onSearch: () => void;
+    onFocus: () => void;
     placeholder: string;
 }
 
@@ -19,7 +20,7 @@ interface Props {
  * @param {string} placeholder - initial query before user input
  * @returns {JSX.Element} Generic SearchBar 
  */
-export default function SearchBar({onSearch, placeholder}: Props) {
+export default function SearchBar({onSearch, onFocus, placeholder}: Props) {
 
     const { query, setQuery } = useContext(SearchQueryContext);
 
@@ -31,8 +32,12 @@ export default function SearchBar({onSearch, placeholder}: Props) {
                     value={query}
                     onChangeText={setQuery}
                     onSubmitEditing={onSearch}
+                    onFocus={ onFocus }
+                    disableFullscreenUI={true}
+                    clearTextOnFocus={true}
                     placeholder={placeholder}
                     placeholderTextColor={colors.white}
+                    clearButtonMode={ "always" }
                     returnKeyType={"search"}
                 />
             </View>
@@ -44,7 +49,6 @@ const styles = StyleSheet.create({
     wrapperContainer: {
         flex: 1,
         width: '100%',
-        height: '100%',
         alignItems: 'center',
     },
     barContainer: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -26,7 +26,7 @@ export default function SearchBarResults({ loading, results }: Props) {
     const renderItem = ({ item } : ItemProps ) => {
         return (
             <View style={styles.item}>
-                <PopupDebugButton text={item.course_name} />
+                <PopupDebugButton text={item.courseName} />
             </View>
         );
 

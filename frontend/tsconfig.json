@@ -10,7 +10,8 @@
             "utilities/*": ["utilities/*"],
             "colors": ["utilities/Colors.tsx"],
             "contexts/*": ["utilities/contexts/*"],
-            "reducers/*": ["utilities/reducers/*"]
+            "reducers/*": ["utilities/reducers/*"],
+            "functions/*": ["utilities/functions/*"]
         },
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,

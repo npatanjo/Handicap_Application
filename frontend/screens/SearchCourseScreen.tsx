@@ -6,6 +6,8 @@ import SearchBarResults from "components/SearchBarResults";
 import BackingFile from "../BACKING_FILE.json";
 import {GolfCourse} from "utilities/GolfCourse";
 import colors from "utilities/Colors";
+import SearchBarFilter from "components/SearchBarFilter";
+import {fetchResults} from "utilities/functions/SearchHelpers";
 
 // MOVE STATE INTO HERE
 // export const SearchContext = React.createContext(null);
@@ -25,13 +27,14 @@ import colors from "utilities/Colors";
 export default function SearchCourseScreen(){
     const [source] = useState(["tilden", "pebble beach", "augusta"]); // later will become database
 
-    const [filter, setFilter] = useState(source);
+    //const [filter, setFilter] = useState(source);
 
     const [query, setQuery] = useState("");
 
     const [results, setResults] = useState<GolfCourse[]>([]);
 
     const [loading, setLoading] = useState(false);
+    const [showResults, setShowResults] = useState(false);
 
 
     const queryValue = useMemo(
@@ -68,43 +71,62 @@ export default function SearchCourseScreen(){
 
     const onSearch = async () : Promise<void> => {
         if (query.trim() === "") {
+            setShowResults(false);
             return;
         }
         setLoading(true);
         try {
             let courses: GolfCourse[] = [];
+
             setResults([]);
             courses = await parseFile();
 
-
-            courses.forEach(course => {
-                if (course.course_name.toLowerCase().includes(query.toLowerCase())) {
-                    setResults( [...results, course] );
-                }
-            });
+            const foundCourses : GolfCourse[] = await fetchResults(query);
+            setResults(foundCourses);
+            //courses.forEach(course => {
+            //    if (course.courseName.toLowerCase().includes(query.toLowerCase())) {
+            //        setResults( [course] );
+            //    }
+            //});
         } catch (e) {
             console.log(e);
         } finally {
             setLoading(false);
+            setShowResults(true);
         }
     };
+
+    const onFilterSelected = (filter: string) : void => {
+        setQuery(filter);
+        onSearch();
+        setShowResults(true);
+        Keyboard.dismiss();
+    }
 
     return (
         <View style={styles.container}>
             <SearchQueryContext.Provider value={queryValue}>
-                <SearchBar
-                    onSearch={onSearch}
-                    placeholder={"Search for a Course"}
-                />
+                <View style={styles.topContainer}>
+                    <SearchBar
+                        onSearch={onSearch}
+                        onFocus={() => { setShowResults(false) }}
+                        placeholder={"Search for a Course"}
+                    />
+                </View>
+                <View style={styles.results}>
+                    {/* HERE IS WHERE THIS NEEDS EDITING
+                      * issue with the search bar SELECTION,
+                      * loading is slow between selections and result renders
+                      *   • useMemo ? 
+                      *   • update the searchBarFilter with the results
+                      *   • LOADING SPINNER to fix this?
+                      */}
+                    {showResults 
+                        ? <SearchBarResults results={results} loading={loading} />
+                        : <SearchBarFilter onPress={onFilterSelected} /> 
+                    }
+                </View>
             </SearchQueryContext.Provider>
-            <View style={styles.results}>
-                <SearchBarResults results={results} loading={loading} />
-            </View>
-            {/* 
-            <SearchQueryContext.Provider value={filteredValue}>
-                     <ResultList /> 
-            </SearchQueryContext.Provider> 
-            */}
         </View>
     );
 };
@@ -116,10 +138,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     topContainer: {
-        height: '10%',
+        height: '15%',
         width: "100%",
         color: '#fff',
-        marginBottom: "15%",
     },
     results: {
         width: "90%",

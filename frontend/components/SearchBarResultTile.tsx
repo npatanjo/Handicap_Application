@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   FlatList,
   ListRenderItem,
@@ -13,11 +12,11 @@ import { CourseRating } from "utilities/GolfCourse";
 
 
 interface Props {
-    course_name: string;
-    course_ratings: CourseRating[];
+    courseName: string;
+    courseRatings: CourseRating[];
 }
 
-export default function SearchBarResultTile({course_name, course_ratings}: Props) {
+export default function SearchBarResultTile({courseName, courseRatings}: Props) {
 
     const renderItem : ListRenderItem<CourseRating> = ({ item }) => {
         return (
@@ -36,11 +35,11 @@ export default function SearchBarResultTile({course_name, course_ratings}: Props
     return (
         <TouchableOpacity style={styles.container}>
             <View style={styles.title}>
-                <Text>{course_name}</Text>
+                <Text>{courseName}</Text>
             </View>
             <View style={styles.colors}>
                 <FlatList
-                    data={course_ratings}
+                    data={courseRatings}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={renderItem}
                     numColumns={3}
