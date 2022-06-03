@@ -6,6 +6,9 @@
     "build": "rm -rf build/ && prettier --write backend/source/ && tsc",
     "serve": "nodemon backend/source/server.ts"
   },
+  "engines": {
+    "node": "18x"
+  },
   "author": "Nate Patanjo",
   "license": "MIT",
   "dependencies": {
