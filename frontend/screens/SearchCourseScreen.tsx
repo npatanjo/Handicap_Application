@@ -1,14 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo, useReducer, useState } from "react";
 import { View, StyleSheet, Keyboard } from "react-native";
 import SearchBar from "components/SearchBar";
 import { SearchQueryContext } from "contexts/SearchContext";
 import SearchBarResults from "components/SearchBarResults";
-import BackingFile from "../BACKING_FILE.json";
 import {GolfCourse} from "utilities/GolfCourse";
-import colors from "utilities/Colors";
+import SearchBarFilter from "components/SearchBarFilter";
+import {fetchResults} from "utilities/functions/SearchHelpers";
+import searchReducer from "utilities/reducers/SearchReducer";
 
 // MOVE STATE INTO HERE
 // export const SearchContext = React.createContext(null);
+
+//const SearchQueryScreen = createContext({});
 
 /**
 * SearchCourseScreen - Contains a SearchBar, and A ResultList. API calls will
@@ -23,88 +26,51 @@ import colors from "utilities/Colors";
 * @returns {React.JSX}
 */
 export default function SearchCourseScreen(){
-    const [source] = useState(["tilden", "pebble beach", "augusta"]); // later will become database
 
-    const [filter, setFilter] = useState(source);
+    const searchStates = useContext(SearchQueryContext);
 
-    const [query, setQuery] = useState("");
+    const [state, dispatch] = useReducer(searchReducer, searchStates as never);
 
-    const [results, setResults] = useState<GolfCourse[]>([]);
-
-    const [loading, setLoading] = useState(false);
-
-
-    const queryValue = useMemo(
-        () => ({query, setQuery}),
-        [query]
-    );
-
-    //const filterValues = useMemo(
-    //    () => ({filter, setFilter}),
-    //    [filter]
-    //);
-
-    //const resultValues = useMemo(
-    //    () => ({results, setResults}),
-    //    [results]
-    //);
-
-    const parseFile = async () : Promise<GolfCourse[]> => {
-        Keyboard.dismiss();
-        let courses : GolfCourse[] = [];
-        try {
-            for (var i in BackingFile) {
-                const course: GolfCourse = BackingFile[i];
-                if (course !== undefined || course !== null) {
-                    courses.push(course);
-                }
-            }
-        } catch (e) {
-            console.log(e);
-        } finally {
-            return courses;
-        }
-    };
+    const contextValue = useMemo(() => ({state, dispatch}), [state, dispatch]);
 
     const onSearch = async () : Promise<void> => {
-        if (query.trim() === "") {
+        if (state.query.trim() === "") {
+            dispatch({type: "setFocused", payload: false});
             return;
         }
-        setLoading(true);
         try {
-            let courses: GolfCourse[] = [];
-            setResults([]);
-            courses = await parseFile();
-
-
-            courses.forEach(course => {
-                if (course.course_name.toLowerCase().includes(query.toLowerCase())) {
-                    setResults( [...results, course] );
-                }
-            });
+            const foundCourses : GolfCourse[] = await fetchResults(state.query);
+            dispatch({type: "setResults", payload: foundCourses});
         } catch (e) {
             console.log(e);
         } finally {
-            setLoading(false);
+            dispatch({type: "setFocused", payload: false});
         }
     };
+
+    const onFilterSelected = (selected: string) : void => {
+        dispatch({type: "setQuery", payload: selected});
+        onSearch();
+        dispatch({type: "setFocused", payload: false});
+    }
 
     return (
         <View style={styles.container}>
-            <SearchQueryContext.Provider value={queryValue}>
-                <SearchBar
-                    onSearch={onSearch}
-                    placeholder={"Search for a Course"}
-                />
+            <SearchQueryContext.Provider value={contextValue}>
+                <View style={styles.topContainer}>
+                    <SearchBar
+                        onSearch={onSearch}
+                        placeholder={"Search for a Course"}
+                        icon={true}
+                    />
+                </View>
+                <View style={styles.results}>
+                    {!state.focused 
+                        ? <SearchBarResults />
+                        : <SearchBarFilter onPress={onFilterSelected} /> 
+                    }
+                </View>
             </SearchQueryContext.Provider>
-            <View style={styles.results}>
-                <SearchBarResults results={results} loading={loading} />
-            </View>
-            {/* 
-            <SearchQueryContext.Provider value={filteredValue}>
-                     <ResultList /> 
-            </SearchQueryContext.Provider> 
-            */}
         </View>
     );
 };
@@ -116,10 +82,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     topContainer: {
-        height: '10%',
+        height: '15%',
         width: "100%",
         color: '#fff',
-        marginBottom: "15%",
     },
     results: {
         width: "90%",

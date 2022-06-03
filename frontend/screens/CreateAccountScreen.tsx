@@ -3,8 +3,6 @@
  *
  *
  */
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import LoginScreen from "screens/LoginScreen";
 import React, { useEffect, useReducer, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
@@ -163,6 +161,7 @@ const CreateAccountScreen = ({ navigation }: Props) => {
     return user.gender === "M" ? true : false;
   };
 
+<<<<<<< HEAD
   return (
     <View style={styles.container}>
       <View style={styles.loginContainer}>
@@ -183,6 +182,55 @@ const CreateAccountScreen = ({ navigation }: Props) => {
             }
             secureTextEntry={true}
           />
+=======
+    return (
+        <View style={styles.container}>
+            <View style={styles.loginContainer}>
+                <Text style={styles.header}> Create Account</Text>
+                <View style={styles.inputContainer}>
+                    <LoginInputBar placeholder={"Username"} 
+                        value={user.username}
+                        setValue={(newText:string) => dispatch({type: "setUsername", payload: newText})}
+                    />
+                    <LoginInputBar placeholder={"Password"}
+                        value={user.password} 
+                        setValue={(newText:string) => dispatch({type: "setPassword", payload: newText})}
+                        secureTextEntry={true} 
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    {/* I'm going to abstract this another layer tomorrow so Gender Button only takes A male or female prop */}
+                    <GenderButton  
+                        iconName={"human-female"}
+                        onPress={() => {
+                            dispatch({type: 'setGender', payload: 'F'})
+                        }}
+                        selected={isFemale()}
+                    />
+                    <GenderButton  
+                        iconName={"human-male"}
+                        onPress={() => {
+                            dispatch({type: 'setGender', payload: 'M'})
+                        }}
+                        selected={isMale()}
+                    />
+                </View>
+                <View style={styles.loginButtonContainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {}}
+                    >
+                        <Text style={styles.buttonText}>Create</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.loginContainer}
+                        onPress={() => navigation.navigate("Login Screen")}
+                    >
+                        <Text style={styles.loginButtonText}>LOGIN</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+>>>>>>> refs/remotes/origin/upstream-frontend
         </View>
         <View style={styles.buttonContainer}>
           {/* I'm going to abstract this another layer tomorrow so Gender Button only takes A male or female prop */}
