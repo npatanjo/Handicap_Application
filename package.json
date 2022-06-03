@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "backend/source/server.ts",
   "scripts": {
-    "build": "rm -rf build/ && prettier --write backend/source/ && tsc",
+    "build": "rm -rf build && tsc",
     "serve": "nodemon backend/source/server.ts"
   },
   "engines": {
