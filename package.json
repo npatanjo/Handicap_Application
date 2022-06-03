@@ -1,9 +1,9 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "source/server.ts",
+  "main": "backend/source/server.ts",
   "scripts": {
-    "build": "rm -rf build/ && prettier --write source/ && tsc",
+    "build": "rm -rf build/ && prettier --write backend/source/ && tsc",
     "serve": "nodemon backend/source/server.ts"
   },
   "author": "Nate Patanjo",
