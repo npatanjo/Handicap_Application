@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "backend/source/server.ts",
   "scripts": {
-    "build": "rm -rf build && cd backend/ && tsc --noesModuleInterop ",
+    "build": "rm -rf backend/build && tsc backend/source",
     "serve": "nodemon backend/source/server.ts"
   },
   "engines": {
-    "yarn": "1.22.19"
+    "node": "18.x"
   },
   "author": "Nate Patanjo",
   "license": "MIT",
