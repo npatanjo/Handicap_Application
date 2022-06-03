@@ -15,4 +15,5 @@ export default interface IUser extends Document {
     username: string;
     password: string;
     gender: string;
+    token: string;
 }

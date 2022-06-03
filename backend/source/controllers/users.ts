@@ -18,12 +18,13 @@ import User from '../models/users';
  *
  */
 const createUser = (req: Request, res: Response, next: NextFunction) => {
-    let { username, password, gender } = req.body;
+    let { username, password, gender, token } = req.body;
     const user = new User({
         _id: new mongoose.Types.ObjectId(), //mongoose build id generator
         username,
         password,
-        gender
+        gender,
+        token
     });
 
     return user
@@ -41,10 +42,6 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-const putUser = (req: Request, res: Response, next: NextFunction) => {
-    return req.body;
-};
-
 /**
  *
  * @param req
@@ -52,7 +49,6 @@ const putUser = (req: Request, res: Response, next: NextFunction) => {
  * @param next
  */
 const deleteUser = (req: Request, res: Response, next: NextFunction) => {
-    console.log('TLDKJFLSKDJF');
     let u = req.params.u;
     console.log(u);
     User.findOneAndRemove({ username: u })
@@ -93,6 +89,38 @@ const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
+const getUsersByName = (req: Request, res: Response, next: NextFunction) => {
+    User.findOne({ username: req.params.u })
+        .exec()
+        .then((results) => {
+            return res.status(200).json({
+                users: results
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
+const updatePassword = (req: Request, res: Response, next: NextFunction) => {
+    User.findOneAndUpdate({ username: req.params.u }, { password: req.params.p })
+        .exec()
+        .then((results) => {
+            return res.status(200).json({
+                message: `Password for ${req.params.u} successfully changed`
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {};
 
-export { createUser, getAllUsers, authenticateUser, putUser, deleteUser };
+export { createUser, getAllUsers, authenticateUser, deleteUser, getUsersByName, updatePassword };

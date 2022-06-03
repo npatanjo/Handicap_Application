@@ -51,7 +51,7 @@ const app = express();
     */
 
 mongoose
-    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
+    .connect('mongodb+srv://dev:gnu@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
     .then((result) => {
         logging.info(NAMESPACE, 'Mongo Connected');
     })

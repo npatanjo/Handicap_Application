@@ -47,4 +47,38 @@ function addCourseHelper(ratings: any) {
     return ratings;
 }
 
-export { addCourse };
+const getAllCourses = (req: Request, res: Response, next: NextFunction) => {
+    console.log('lsdkfjlsdkfj');
+    Course.find()
+        .exec()
+        .then((results) => {
+            return res.status(200).json({
+                courses: results,
+                count: results.length
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
+const getCourseByName = (req: Request, res: Response, next: NextFunction) => {
+    Course.findOne({ name: req.params.n })
+        .exec()
+        .then((results: any) => {
+            return res.status(200).json({
+                course: results
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
+export { addCourse, getAllCourses, getCourseByName };
