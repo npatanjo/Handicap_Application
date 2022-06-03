@@ -3,8 +3,6 @@
  *
  *
  */
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import LoginScreen from "screens/LoginScreen";
 import React, { useEffect, useReducer, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
@@ -198,11 +196,14 @@ const CreateAccountScreen = ({ navigation }: Props) => {
                 <View style={styles.loginButtonContainer}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate("Login Screen")}
+                        onPress={() => {}}
                     >
                         <Text style={styles.buttonText}>Create</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.loginContainer} onPress={() => {}}>
+                    <TouchableOpacity
+                        style={styles.loginContainer}
+                        onPress={() => navigation.navigate("Login Screen")}
+                    >
                         <Text style={styles.loginButtonText}>LOGIN</Text>
                     </TouchableOpacity>
                 </View>

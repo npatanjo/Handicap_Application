@@ -1,16 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo, useReducer, useState } from "react";
 import { View, StyleSheet, Keyboard } from "react-native";
 import SearchBar from "components/SearchBar";
 import { SearchQueryContext } from "contexts/SearchContext";
 import SearchBarResults from "components/SearchBarResults";
-import BackingFile from "../BACKING_FILE.json";
 import {GolfCourse} from "utilities/GolfCourse";
-import colors from "utilities/Colors";
 import SearchBarFilter from "components/SearchBarFilter";
 import {fetchResults} from "utilities/functions/SearchHelpers";
+import searchReducer from "utilities/reducers/SearchReducer";
 
 // MOVE STATE INTO HERE
 // export const SearchContext = React.createContext(null);
+
+//const SearchQueryScreen = createContext({});
 
 /**
 * SearchCourseScreen - Contains a SearchBar, and A ResultList. API calls will
@@ -25,104 +26,47 @@ import {fetchResults} from "utilities/functions/SearchHelpers";
 * @returns {React.JSX}
 */
 export default function SearchCourseScreen(){
-    const [source] = useState(["tilden", "pebble beach", "augusta"]); // later will become database
 
-    //const [filter, setFilter] = useState(source);
+    const searchStates = useContext(SearchQueryContext);
 
-    const [query, setQuery] = useState("");
+    const [state, dispatch] = useReducer(searchReducer, searchStates as never);
 
-    const [results, setResults] = useState<GolfCourse[]>([]);
-
-    const [loading, setLoading] = useState(false);
-    const [showResults, setShowResults] = useState(false);
-
-
-    const queryValue = useMemo(
-        () => ({query, setQuery}),
-        [query]
-    );
-
-    //const filterValues = useMemo(
-    //    () => ({filter, setFilter}),
-    //    [filter]
-    //);
-
-    //const resultValues = useMemo(
-    //    () => ({results, setResults}),
-    //    [results]
-    //);
-
-    const parseFile = async () : Promise<GolfCourse[]> => {
-        Keyboard.dismiss();
-        let courses : GolfCourse[] = [];
-        try {
-            for (var i in BackingFile) {
-                const course: GolfCourse = BackingFile[i];
-                if (course !== undefined || course !== null) {
-                    courses.push(course);
-                }
-            }
-        } catch (e) {
-            console.log(e);
-        } finally {
-            return courses;
-        }
-    };
+    const contextValue = useMemo(() => ({state, dispatch}), [state, dispatch]);
 
     const onSearch = async () : Promise<void> => {
-        if (query.trim() === "") {
-            setShowResults(false);
+        if (state.query.trim() === "") {
+            dispatch({type: "setFocused", payload: false});
             return;
         }
-        setLoading(true);
         try {
-            let courses: GolfCourse[] = [];
-
-            setResults([]);
-            courses = await parseFile();
-
-            const foundCourses : GolfCourse[] = await fetchResults(query);
-            setResults(foundCourses);
-            //courses.forEach(course => {
-            //    if (course.courseName.toLowerCase().includes(query.toLowerCase())) {
-            //        setResults( [course] );
-            //    }
-            //});
+            const foundCourses : GolfCourse[] = await fetchResults(state.query);
+            dispatch({type: "setResults", payload: foundCourses});
         } catch (e) {
             console.log(e);
         } finally {
-            setLoading(false);
-            setShowResults(true);
+            dispatch({type: "setFocused", payload: false});
         }
     };
 
-    const onFilterSelected = (filter: string) : void => {
-        setQuery(filter);
+    const onFilterSelected = (selected: string) : void => {
+        dispatch({type: "setQuery", payload: selected});
         onSearch();
-        setShowResults(true);
-        Keyboard.dismiss();
+        dispatch({type: "setFocused", payload: false});
     }
 
     return (
         <View style={styles.container}>
-            <SearchQueryContext.Provider value={queryValue}>
+            <SearchQueryContext.Provider value={contextValue}>
                 <View style={styles.topContainer}>
                     <SearchBar
                         onSearch={onSearch}
-                        onFocus={() => { setShowResults(false) }}
                         placeholder={"Search for a Course"}
+                        icon={true}
                     />
                 </View>
                 <View style={styles.results}>
-                    {/* HERE IS WHERE THIS NEEDS EDITING
-                      * issue with the search bar SELECTION,
-                      * loading is slow between selections and result renders
-                      *   • useMemo ? 
-                      *   • update the searchBarFilter with the results
-                      *   • LOADING SPINNER to fix this?
-                      */}
-                    {showResults 
-                        ? <SearchBarResults results={results} loading={loading} />
+                    {!state.focused 
+                        ? <SearchBarResults />
                         : <SearchBarFilter onPress={onFilterSelected} /> 
                     }
                 </View>

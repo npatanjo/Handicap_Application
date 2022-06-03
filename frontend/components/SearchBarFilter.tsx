@@ -1,35 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 import { FlatList, Text, View, TouchableOpacity, StyleSheet, Keyboard } from 'react-native';
 import {SearchQueryContext} from 'contexts/SearchContext';
 import {fetchFilter} from 'functions/SearchHelpers';
-
 
 
 interface Props {
     onPress: (filter: string) => void;
 }
 
-
 interface ItemProps {
     item: string;
 }
 
-
 export default function SearchBarFilter({onPress}: Props) {
 
-    const { query, setQuery } = useContext(SearchQueryContext);
-    const [filters, setFilters] = useState([] as string[]);
+    const { state, dispatch } = useContext(SearchQueryContext);
 
     useEffect(() => {
-        async function getFilter(query: string) {
-            console.log(`useEffect called in SearchBarFilter setFilters(${query})`);
+        async function getFilter(q: string) {
+            console.log(`useEffect called in SearchBarFilter setFilters(${state.query})`);
             console.log();
-            await fetchFilter(query)
-            .then(( res : string[] ) => setFilters(res))
-            .catch(err => console.log(err));
+            try{
+                const filters = await fetchFilter(q);
+                dispatch({type:'setFilter', payload:filters});
+            } catch (e) {
+                console.log(e);
+            } finally {
+
+            }
         }
-        getFilter(query);
-    }, [query]);
+        getFilter(state.query);
+    }, [state.query]);
 
 
     const ItemDivider = () => {
@@ -51,12 +52,12 @@ export default function SearchBarFilter({onPress}: Props) {
     return (
         <View style={styles.container}>
             <FlatList
-                data={filters}
+                data={state.filter}
                 renderItem={renderItem}
                 ItemSeparatorComponent={ItemDivider}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={1}
-                extraData={query}
+                extraData={state.filter}
                 keyboardShouldPersistTaps={'handled'}
             />
         </View>
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     text: {
-        fontSize: 18,
+        fontSize: 25,
         fontWeight: 'bold',
         color: '#000'
     }

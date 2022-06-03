@@ -24,3 +24,4 @@ export async function fetchResults(search: string) : Promise<GolfCourse[]> {
     });
     return resultingCourses;
 }                                  
+

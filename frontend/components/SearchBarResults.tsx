@@ -1,4 +1,5 @@
-import React from "react";
+import {NavigationContext} from "@react-navigation/native";
+import React, {useContext} from "react";
 import {
   View,
   StyleSheet,
@@ -6,27 +7,32 @@ import {
   Text,
 } from "react-native";
 import colors from "utilities/Colors";
+import {SearchQueryContext} from "utilities/contexts/SearchContext";
 import { GolfCourse } from "utilities/GolfCourse";
 import PopupDebugButton from "./PopupDebugButton";
+import SearchBarResultTile from "./SearchBarResultTile";
 
-interface Props {
-    loading: boolean;
-    results: GolfCourse[];
-  //onPress?: () => void;
-}
 
 interface ItemProps {
     item: GolfCourse;
 }
 
-export default function SearchBarResults({ loading, results }: Props) {
+export default function SearchBarResults() {
 
-    // const [courses, setCourses] = useState<GolfCourse[]>([]);
+    const {state, dispatch} = useContext(SearchQueryContext);
+
+    const navigation = useContext(NavigationContext);
 
     const renderItem = ({ item } : ItemProps ) => {
+        const firstCourses = item.courseRatings.slice(0, 6);
         return (
             <View style={styles.item}>
-                <PopupDebugButton text={item.courseName} />
+                <SearchBarResultTile
+                    courseName={item.courseName}
+                    courseRatings={item.courseRatings}
+                    firstCourseRatings={firstCourses}
+                    navigation={navigation}
+                />
             </View>
         );
 
@@ -35,16 +41,17 @@ export default function SearchBarResults({ loading, results }: Props) {
     return ( 
         <View style={styles.container}>
             {
-                loading 
-                    ? <Text style={styles.loading}>Loading...</Text> 
-                    : <FlatList
-                        data={results}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={renderItem}
-                        numColumns={1}
-                        style={styles.list}
-                        extraData={results}
-                     />
+                state.loading 
+                ? <Text style={styles.loading}>Loading...</Text> 
+                : <FlatList
+                    data={state.results}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={renderItem}
+                    numColumns={1}
+                    style={styles.list}
+                    extraData={state.results}
+                    ItemSeparatorComponent={() => <View style={styles.separator} />}
+                 />
             }
         </View> 
     );
@@ -61,9 +68,16 @@ const styles = StyleSheet.create({
     list: {
         width: "100%",
         height: "80%",
+        borderRadius: 15,
     },
     item: {
+        backgroundColor: colors.primary,
         paddingVertical: 10,
+        borderRadius: 15,
+    },
+    separator: {
+        height: 5,
+        backgroundColor: colors.white,
     },
     loading: {
         backgroundColor: "#fff",
@@ -72,6 +86,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         alignItems: "center",
         justifyContent: "center",
-    }
+    },
 
 });

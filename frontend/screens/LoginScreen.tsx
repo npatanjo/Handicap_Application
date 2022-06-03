@@ -1,31 +1,35 @@
 /**
  * @author Nate Patanjo, Nick Donfris
  *
+ * FIX STYLING
+ *
  */
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
 import colors from "colors";
+import {UserContext} from "utilities/contexts/UserContext";
 
 interface Props {
   navigation: any;
 }
 
 const LoginScreen = ({ navigation }: Props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
+    const {state, dispatch} = useContext(UserContext);
+    
 
   return (
     <View style={styles.container}>
       <View style={styles.loginContainer}>
         <Text style={styles.header}> Account Login </Text>
-        <LoginInputBar placeholder={"Username"} value={username} setValue={(text)=>{setUsername(text)}} />
-        <LoginInputBar placeholder={"Password"} value={username} setValue={(text)=>{setUsername(text)}} secureTextEntry={true} />
+        <LoginInputBar placeholder={"Username"} value={state.username} setValue={(text)=>{dispatch({type: 'setUsername', payload: text})}} />
+        <LoginInputBar placeholder={"Password"} value={state.password} setValue={(text)=>{dispatch({type: 'setPassword', payload: text})}} secureTextEntry={true} />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Login Screen")}
+            onPress={() => navigation.navigate()}
           >
             <Text style={styles.buttonText}>login</Text>
           </TouchableOpacity>
@@ -33,7 +37,7 @@ const LoginScreen = ({ navigation }: Props) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Create Account")}
+            onPress={() => navigation.navigate('')}
           >
             <Text style={styles.buttonText}>create account</Text>
           </TouchableOpacity>

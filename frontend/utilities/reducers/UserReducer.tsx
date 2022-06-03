@@ -17,7 +17,7 @@ export const initialUserState: userState = {
 
 // type is the field to update
 // payload is the new value
-type userActions = 
+export type userActions = 
       {type: 'setInitial', payload: userState} 
     | {type: 'setUsername', payload: string} 
     | {type: 'setPassword', payload: string} 

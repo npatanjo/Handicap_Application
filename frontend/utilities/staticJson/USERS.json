@@ -1,0 +1,14 @@
+[ 
+    {
+        "username": "nick",
+        "password": "dev",
+        "gender": "M",
+        "token": "testToken1"
+    },
+    {
+        "username": "susie",
+        "password": "dev",
+        "gender": "F",
+        "token": "testToken2"
+    }
+]

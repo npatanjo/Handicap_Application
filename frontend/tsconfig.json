@@ -11,7 +11,10 @@
             "colors": ["utilities/Colors.tsx"],
             "contexts/*": ["utilities/contexts/*"],
             "reducers/*": ["utilities/reducers/*"],
-            "functions/*": ["utilities/functions/*"]
+            "functions/*": ["utilities/functions/*"],
+            "json/*": ["utilities/staticJson/*"],
+            "interfaces/*": ["utilities/interfaces/*"],
+            "types/*": ["utilities/types/*"]
         },
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,

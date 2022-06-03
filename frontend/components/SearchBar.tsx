@@ -1,12 +1,47 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, TextInput } from "react-native";
+import React, { useContext, useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, TouchableOpacity, Keyboard } from "react-native";
 import colors from 'utilities/Colors';
 import {SearchQueryContext} from 'contexts/SearchContext';
+import { EvilIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
+import RefineSearch from './RefineSearch';
 
 interface Props {
     onSearch: () => void;
-    onFocus: () => void;
     placeholder: string;
+    icon?: boolean;
+}
+
+interface IconProps {
+    hasFocus: boolean;
+    setVisible: (visible: boolean) => void;
+}
+
+function RightIcon({ hasFocus, setVisible }: IconProps) {
+    const {state, dispatch} = useContext(SearchQueryContext);
+
+    if (hasFocus) {
+        return (
+            <TouchableOpacity 
+                style={styles.rightIcon}
+                onPress={() => {
+                    dispatch({type: 'setFocused', payload: false});
+                    dispatch({type: 'setQuery', payload: ''});
+                }}
+            >
+                <EvilIcons name="close" size={24} color={ colors.white } />
+            </TouchableOpacity>
+        );
+    } else {
+        return (
+            <TouchableOpacity 
+                style={styles.rightIcon}
+                onPress={() => setVisible(true)}
+            >
+                <MaterialIcons name={"sports-golf"} size={24} color={colors.white} />
+            </TouchableOpacity>
+        );
+    }
 }
 
 /**
@@ -20,26 +55,47 @@ interface Props {
  * @param {string} placeholder - initial query before user input
  * @returns {JSX.Element} Generic SearchBar 
  */
-export default function SearchBar({onSearch, onFocus, placeholder}: Props) {
+export default function SearchBar({onSearch, placeholder, icon}: Props) {
 
-    const { query, setQuery } = useContext(SearchQueryContext);
+    const { state, dispatch } = useContext(SearchQueryContext);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        if (state.focused == false) {
+            Keyboard.dismiss();
+        }
+    }, [ state.focused ]);
+    
+    const onChangeText = (text: string) => {
+        dispatch({type: 'setQuery', payload: text});
+    }
+
+    const onFocus = () => {
+        dispatch({type: 'setFocused', payload: true});
+    }
 
     return (
         <View style={styles.wrapperContainer}>
-            <View style={styles.barContainer}>
-                <TextInput 
-                    style={styles.textContainer}
-                    value={query}
-                    onChangeText={setQuery}
-                    onSubmitEditing={onSearch}
-                    onFocus={ onFocus }
-                    disableFullscreenUI={true}
-                    clearTextOnFocus={true}
-                    placeholder={placeholder}
-                    placeholderTextColor={colors.white}
-                    clearButtonMode={ "always" }
-                    returnKeyType={"search"}
-                />
+            <View style={styles.innerWrapperContainer}>
+                <View style={styles.barContainer}>
+                    <TextInput 
+                        style={styles.textContainer}
+                        value={state.query}
+                        onChangeText={onChangeText}
+                        onSubmitEditing={onSearch}
+                        onFocus={onFocus}
+                        disableFullscreenUI={true}
+                        clearTextOnFocus={true}
+                        placeholder={placeholder}
+                        placeholderTextColor={colors.white}
+                        returnKeyType={"search"}
+                        selectTextOnFocus={true}
+                    />
+                    {icon && <RightIcon hasFocus={state.focused} setVisible={() => setVisible(true)} />}
+                </View>
+                <View style={styles.refineContainer}>
+                    <RefineSearch visible={visible} setVisible={setVisible} currentSearch={'all'}/>
+                </View>
             </View>
         </View>
     );
@@ -50,20 +106,45 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
+        justifyContent: 'center',
+    },
+    innerWrapperContainer: {
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     barContainer: {
-        justifyContent: 'space-around',
         textAlign: 'center',
         backgroundColor: colors.primary,
         color: colors.white,
-        width: '80%',
+        width: '100%',
         padding: '5%',
-        marginTop: '15%',
+        marginTop: '10%',
         borderRadius: 15,
         fontSize: 15,
+        flexDirection: 'row',
+        zIndex: 1,
     },
     textContainer: {
         color: colors.white,
+        position: 'relative',
+        width: '90%',
+        alignSelf: 'flex-start',
+        zIndex: 1,
+    },
+    rightIcon: {
+        textAlign: 'center',
+        position: 'relative',
+        alignSelf: 'flex-end',
+        width: '8%',
+        right: -10,
+    },
+    refineContainer: {
+        width: '50%',
+        height: '50%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
     }
 });
 
