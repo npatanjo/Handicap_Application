@@ -1,0 +1,18 @@
+{
+    "USERS": 
+         [
+            {
+                "username": "nick",
+                "password": "gnu",
+                "gender": "M",
+                "token": "testToken1"
+            },
+            {
+                "username": "susie",
+                "password": "gnu",
+                "gender": "F",
+                "token": "testToken2"
+            }
+        ] 
+
+}

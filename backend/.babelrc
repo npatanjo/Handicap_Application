@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "testHelpers": "./test/src/helpers/*",
+          "testJson": "./test/src/json/*",
+          "test": "./test/src/*"
+        }
+      }
+    ]
+  ]
+}
