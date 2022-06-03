@@ -81,4 +81,40 @@ const getCourseByName = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-export { addCourse, getAllCourses, getCourseByName };
+const fuzzySearch = (req: Request, res: Response, next: NextFunction) => {
+    const regex = new RegExp(req.params.n, 'i'); // i for case insensitive
+    Course.find({ name: { $regex: regex } })
+        .exec()
+        .then((results: any) => {
+            return res.status(200).json({
+                course: results
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
+const fuzzySearchWithFilter = (req: Request, res: Response, next: NextFunction) => {
+    let { search, filters } = req.body;
+
+    const regex = new RegExp(search, 'i'); // i for case insensitive
+    Course.find({ name: { $regex: regex }, ratings: filters })
+        .exec()
+        .then((results: any) => {
+            return res.status(200).json({
+                course: results
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
+export { addCourse, getAllCourses, getCourseByName, fuzzySearch, fuzzySearchWithFilter };
