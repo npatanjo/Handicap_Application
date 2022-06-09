@@ -1,11 +1,20 @@
 import USERS from 'json/USERS.json';
-import userState from 'types/User';
+//import userState from 'reducers/UserReducer';
 
-export async function getAllUsers() : Promise<userState[]> {
-    let users: userState[] = [];
+interface UserState {
+    username: string,
+    password: string,
+    gender: 'M' | 'F' | '',
+    token: string,
+    isLoggedIn: boolean,
+}
+
+export async function getAllUsers() : Promise<UserState[]> {
+    let users: UserState[] = [];
     try {
-        USERS.forEach(user => {
-            users.push(user);
+        USERS.forEach(
+            user => {
+            users.push(user as UserState);
         });
     } catch (e) {
 
@@ -14,13 +23,13 @@ export async function getAllUsers() : Promise<userState[]> {
     }
 }
 
-export async function validUser(check: userState) : Promise<boolean> {
+export async function validUser(check: UserState) : Promise<boolean> {
     let isValid: boolean = false;
     try {
         console.log("CHECK CALLED")
         console.log(`validUser(${ check })`);
         console.log();
-        USERS.forEach((user: userState) => {
+        USERS.forEach((user) => {
             if (user.token === check.token) {
                 isValid = true;
             } else if (user.username === check.username && user.password === check.password) {
@@ -33,7 +42,7 @@ export async function validUser(check: userState) : Promise<boolean> {
     return isValid;
 }
 
-export function setUserLoggedIn(user: userState, dispatch: any) {
+export function setUserLoggedIn(user: UserState, dispatch: any) {
     dispatch({type: "setUsername", payload: user.username});
     dispatch({type: "setPassword", payload: user.password});
     dispatch({type: "setGender", payload: user.gender});

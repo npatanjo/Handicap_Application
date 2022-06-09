@@ -77,7 +77,7 @@ export default function App() {
                 <UserContext.Provider value={userValues}>
                     {auth_state.isLoading 
                         ? <SplashScreen />
-                        : auth_state.isLoggedIn 
+                        : ( auth_state.isLoggedIn || auth_state.isLoggedIn )
                         ? <HomeTabStack />
                         : <AuthStack />
                     }
