@@ -3,12 +3,12 @@
  *
  */
 
-import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
 import colors from "colors";
 import {UserContext} from "utilities/contexts/UserContext";
-import {NavigationContainer, useNavigation} from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
 import {setUserLoggedIn} from "utilities/functions/LoginFunctions";
 
 interface NavButtonProps {
@@ -38,7 +38,6 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
             <Text style={styles.buttonText}>{buttonText}</Text>
           </TouchableOpacity>
         </>
-
     );
 }
 
