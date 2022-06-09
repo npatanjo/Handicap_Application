@@ -9,11 +9,14 @@ module.exports = function(api) {
                 {
                     alias: {
                         components: "./components",
-                        screens: "./screens",
+                        screens: "./navigation/screens",
+                        screenStacks: "./navigation/screen-stacks",
+                        tabStacks: "./navigation/tab-stacks",
                         assets: "./assets",
                         utilities: "./utilities",
                         colors: "./utilities/Colors.tsx",
                         state: "./state",
+                        themes: "./utilities/themes",
                         contexts: "./utilities/contexts",
                         reducers: "./utilities/reducers",
                         functions: "./utilities/functions",

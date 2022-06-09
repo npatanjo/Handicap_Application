@@ -4,9 +4,12 @@
     "compilerOptions": {
         "baseUrl":".",
         "paths": {
-            "screens/*": ["screens/*"],
+            "screens/*": ["navigation/screens/*"],
+            "screenStacks/*": ["navigation/screen-stacks/*"],
+            "tabStacks/*": ["navigation/tab-stacks/*"],
             "components/*": ["components/*"],
             "assets/*": ["assets/*"],
+            "themes/*": ["utilities/themes/*"],
             "utilities/*": ["utilities/*"],
             "colors": ["utilities/Colors.tsx"],
             "contexts/*": ["utilities/contexts/*"],

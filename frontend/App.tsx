@@ -1,33 +1,16 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import { AsyncStorage, LogBox } from "react-native";
+import React, { useContext, useEffect, useMemo, useReducer } from "react";
+import { LogBox } from "react-native";
 import { StyleSheet, View } from "react-native";
 import SplashScreen from "screens/SplashScreen";
-import BottomBar from 'components/BottomBar';
-import {setUserLoggedIn, setUserStates, validUser} from "utilities/functions/LoginFunctions";
-import LoginWrapperScreen from "screens/LoginWrapperScreen";
+import {validUser} from "utilities/functions/LoginFunctions";
 import {UserContext} from "utilities/contexts/UserContext";
-import userReducer, {initialUserState, userState} from "utilities/reducers/UserReducer";
-import {NavigationContext} from "@react-navigation/native";
-import LoginScreen from "screens/LoginScreen";
+import userReducer, {userState} from "utilities/reducers/UserReducer";
+import {AuthContext} from "utilities/contexts/AuthContext";
+import authReducer, {} from "utilities/reducers/AuthReducer";
+import AuthStack from "screenStacks/AuthStack";
+import HomeTabStack from "tabStacks/HomeTabStack";
+import {NavigationContainer} from "@react-navigation/native";
 LogBox.ignoreLogs(["Syntax Error", "JSON Parse error: Unrecognized token"]);
-
-interface Props {
-    isLoaded: boolean;
-    isLoggedIn: boolean;
-}
-
-function DisplayScreen({isLoaded, isLoggedIn }: Props) {
-    if (isLoaded) {
-        return (<></>);
-    } else {
-        if (isLoggedIn) {
-            return (<BottomBar/>);
-        } else {
-            return (<LoginWrapperScreen/>);
-        }
-    }
-}
-
 
 /** 
  * App routes need reworking
@@ -37,54 +20,71 @@ function DisplayScreen({isLoaded, isLoggedIn }: Props) {
  */
 export default function App() {
     
-    const [ isLoading, setIsLoading ] = useState(true);
+
+    const authContext = useContext(AuthContext);
+
+    const [ auth_state, auth_dispatch ] = useReducer(authReducer, authContext as never);
+
+
 
     const userStates = useContext(UserContext);
-    const [state, dispatch] = useReducer(userReducer, userStates as never)
+    const [user_state, user_dispatch] = useReducer(userReducer, userStates as never)
 
-    
+
     useEffect(() => {
         setTimeout(() => {
-            setIsLoading(true);
+            checkLogin();
+            auth_dispatch({type: "LOADING", payload: false});
         }, 3500);
-        checkLogin();
-        setIsLoading(false);
+        auth_dispatch({type: "LOADING", payload: true});
     }, []);
 
+    useEffect(() => {
+        checkLogin();
+        auth_dispatch({type: "LOGGED_IN", payload: true});
+    }, [auth_state.isLoading]);
     
     const checkLogin = async () => {
         //const user = await AsyncStorage.getItem('user');
-        let isValid = false;
-        let user : userState = {username: 'nick', password: 'gnu', gender: 'M', token:'testToken1', isLoggedIn: true};
-        try {
-            isValid = await validUser(user);
-            if (isValid) {
-                setUserStates(user, dispatch);
+        if (auth_state.isLoading || !auth_state.isLoggedIn) {
+            let isValid = false;
+            let user : userState = {username: 'nick', password: 'gnu', gender: 'M', token:'testToken1', isLoggedIn: true};
+            try {
+                isValid = await validUser(user);
+            } catch(err){
+                console.log(err);
+            } finally {
+                auth_dispatch({type: 'LOGGED_IN', payload: isValid });
             }
-        } catch(err){
-            console.log(err);
-        } finally {
-            setUserLoggedIn(state, isValid);
-            setIsLoading(false);
         }
     }
 
 
+    const authValues = {
+        state: auth_state,
+        dispatch: auth_dispatch
+    };
+
+    const userValues = {
+        state: user_state,
+        dispatch: user_dispatch
+    };
+
     /* return the bottom tabbar component and render the active page (initializes to Search)  */
     return (
-        <View style={styles.container}>
-            <UserContext.Provider value={{state, dispatch}}>
-            {isLoading 
-                ? <SplashScreen />
-                : <LoginScreen />
-            }
-            </UserContext.Provider>
-        </View>
+        <NavigationContainer>
+            <AuthContext.Provider value={authValues}>
+                <UserContext.Provider value={userValues}>
+                    {auth_state.isLoading 
+                        ? <SplashScreen />
+                        : auth_state.isLoggedIn 
+                        ? <HomeTabStack />
+                        : <AuthStack />
+                    }
+                </UserContext.Provider>
+            </AuthContext.Provider>
+        </NavigationContainer>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
+

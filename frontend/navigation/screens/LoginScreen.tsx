@@ -1,8 +1,6 @@
 /**
  * @author Nate Patanjo, Nick Donfris
  *
- * FIX STYLING
- *
  */
 
 import React, { useContext, useState } from "react";
@@ -21,16 +19,13 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
     const {state, dispatch} = useContext(UserContext);
 
-    const buttonText = () => {
-        buttonType == "login" ? "Log-in" : "Create Account";
-    }
+    const buttonText = buttonType == "login" ? "Log-in to Account" : "Create an Account";
 
     const onPress = () => {
         if ( buttonType === "create" ) {
-            nav.push("CreateAccountScreen")
+            nav.navigate("CreateAccountScreen")
         } else {
             setUserLoggedIn(state, dispatch);
-            nav.push("HomeScreen")
         }
     }
 
@@ -54,6 +49,7 @@ interface LoginInputProps {
 const LoginInput = ({type} : LoginInputProps) => {
 
     const {state, dispatch} = useContext(UserContext);
+
     const placeholder = () => {
         return type === "username" ? "Username" : "Password";
     }
@@ -72,7 +68,7 @@ const LoginInput = ({type} : LoginInputProps) => {
 
     const SecureTextEntry = () => {
         return type === "password" ? true : false;
-    }
+    };
 
     return (
         <LoginInputBar value={value()} setValue={setValue} placeholder={placeholder()} secureTextEntry={SecureTextEntry()}/>
@@ -80,29 +76,26 @@ const LoginInput = ({type} : LoginInputProps) => {
 }
 
 
-interface Props {
-}
-
-const LoginScreen = ({ }: Props) => {
+export default function LoginScreen(){
 
     const navigation = useNavigation();
     console.log(navigation);
 
-  return (
-        <View style={styles.container}>
-          <View style={styles.loginContainer}>
-            <Text style={styles.header}> Account Login </Text>
-            <LoginInput type={"username"}/>
-            <LoginInput type={"password"}/>
-            <View style={styles.buttonContainer}>
-                <NavButton nav={navigation} buttonType={"login"}/>
-            </View>
-            <View style={styles.buttonContainer}>
-                <NavButton nav={navigation} buttonType={"create"}/>
-            </View>
-          </View>
+    return (
+    <View style={styles.container}>
+      <View style={styles.loginContainer}>
+        <Text style={styles.header}> Account Login </Text>
+        <LoginInput type={"username"}/>
+        <LoginInput type={"password"}/>
+        <View style={styles.buttonContainer}>
+            <NavButton nav={navigation} buttonType={"login"}/>
         </View>
-  );
+        <View style={styles.buttonContainer}>
+            <NavButton nav={navigation} buttonType={"create"}/>
+        </View>
+      </View>
+    </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -136,7 +129,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.primary,
     padding: 10,
-    width: 100,
+    width: 150,
     margin: 15,
     alignItems: "center",
     borderRadius: 10,
@@ -148,5 +141,3 @@ const styles = StyleSheet.create({
     fontSize: 9,
   },
 });
-
-export default LoginScreen;

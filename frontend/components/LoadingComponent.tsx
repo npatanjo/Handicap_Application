@@ -1,70 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import LottieView from "lottie-react-native";
-import colors from "utilities/Colors";
+import LottieView from 'lottie-react-native';
+import {AuthContext} from "contexts/AuthContext";
+import {useContext, useRef, useEffect} from "react";
+import {View, StyleSheet} from "react-native";
+ 
 
-interface Props {
-  shouldShow?: boolean;
-}
-/** 
- * 
- * TODO: 
- * I'm thinking its pretty likely that were going to end up moving the anything related to the
- * bottombar, into its own sepearte component. 
- *
- */
-export default function LoadingComponent({shouldShow} : Props) {
 
-    const [animation, setAnimation] = useState<LottieView | null>();
+export default function LoadingComponent({ showSplash }: { showSplash: boolean}) {
+
+    const {state, dispatch} = useContext(AuthContext);
+    const animation = useRef(null);
 
     useEffect(() => {
-        if (animation) {
-            animation.play();
-        }
-    }, [animation]);
+        // @ts-ignore
+        animation.current.play();
+    }, [state.isLoading]);
 
     return (
-        <View style={styles.container}>
-            { shouldShow 
-                ? <View>
-                    <Text style={styles.title}>Handicap Application</Text>
-                    <LottieView
-                        ref={(animation) => {
-                            setAnimation(animation);
-                        }}
-                        source={require("assets/load_golfball_animation.json")}
-                        autoSize={true}
-                        style={styles.animationContainer}
-                        autoPlay={true}
-                        loop={true}
-                        resizeMode={"contain"}
-                    />
-                </View>
-                : <></>
-            }
-        </View>);
-    
+        <View style={styles.animationContainer}>
+            <LottieView
+                ref={animation}
+                style={{
+                    width: 200,
+                    height: 200,
+                    backgroundColor: '#fff',
+                }}
+                loop={state.isLoading}
+                onAnimationFinish={() => {
+                    dispatch({type: 'LOADING', payload: false});
+                    dispatch({ type:'LOGGED_IN', payload: true })
+                }}
+                source={require('../assets/load_golfball_animation.json')}
+            />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-  },
-  title: {
-    paddingTop: 20,
-    color: colors.primary,
-    fontWeight: "bold",
-    fontSize: 30,
-  },
   animationContainer: {
-    width: "80%",
-    justifyContent: "center",
-    alignSelf: "center",
-    alignItems: "center",
-    marginLeft: "50%",
-    marginRight: "50%",
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-})
+  buttonContainer: {
+    paddingTop: 20,
+  },
+});
