@@ -13,7 +13,7 @@ const HomeScreen = ({}: Props) => {
 
     return (
         <View>
-             { state.isLoggedIn ? <BottomBar/> : <HomeScreen />}
+             {/*   state.isLoggedIn ? <BottomBar/> : <HomeScreen /> */}
         </View>
     );
 

@@ -4,6 +4,6 @@ import {initialUserState, userActions} from "utilities/reducers/UserReducer";
 
 export const UserContext = createContext({
     state: initialUserState,
-    dispatch: (arg: userActions) => {},
+    dispatch: ({type, payload}: userActions) => {},
 })
 

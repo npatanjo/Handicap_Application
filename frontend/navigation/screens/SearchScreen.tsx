@@ -25,7 +25,7 @@ import searchReducer from "utilities/reducers/SearchReducer";
 * @param {Props} props - N/A (potential styling?)
 * @returns {React.JSX}
 */
-export default function SearchCourseScreen(){
+export default function SearchScreen(){
 
     const searchStates = useContext(SearchQueryContext);
 

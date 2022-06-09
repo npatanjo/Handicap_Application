@@ -4,12 +4,6 @@ import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 
 
-
-
-
-
-
-
 interface Props {
 
 }
@@ -17,7 +11,7 @@ interface Props {
 
 
 
-const SavedCourseScreen = ({}: Props) => {
+const SavedScreen = ({}: Props) => {
     return (
         <View style={styles.container}>
             <Text>Saved Course Screen</Text>
@@ -37,5 +31,5 @@ const styles = StyleSheet.create({
 
 
 
-export default SavedCourseScreen;
+export default SavedScreen;
 

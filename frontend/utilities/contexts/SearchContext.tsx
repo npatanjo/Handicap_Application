@@ -8,8 +8,8 @@ interface SearchContextProps {
 }
 export const SearchQueryContext = createContext({
     state: initialSearchState,
-    dispatch: (arg: searchActions ) => {},
-});
+    dispatch: (arg: searchActions) => {}
+})
 
 //export const SearchQueryContext = createContext({
 //    query: "",

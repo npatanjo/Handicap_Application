@@ -1,6 +1,7 @@
 
 import React, {useContext} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {AuthContext} from "utilities/contexts/AuthContext";
 import {UserContext} from "utilities/contexts/UserContext";
 import {initialUserState} from "utilities/reducers/UserReducer";
 
@@ -30,12 +31,17 @@ function InlineText({text1, text2} : InlineProps) {
 
 }
 
-const AccoutScreen = ({}: Props) => {
+const AccountScreen = ({}: Props) => {
 
-    const {state, dispatch} = useContext(UserContext);
+    //const {state, dispatch} = useContext(UserContext);
+
+    const {state} = useContext(UserContext);
+    const { dispatch } = useContext(AuthContext);
+
 
     const logout = () => {
-        dispatch({type: "setInitial", payload: initialUserState})
+        dispatch({type: "LOGGED_IN", payload: false});
+        dispatch({type: "LOADING", payload: false});
     }
 
     return (
@@ -115,5 +121,5 @@ const styles = StyleSheet.create({
 
 
 
-export default AccoutScreen;
+export default AccountScreen;
 

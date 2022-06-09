@@ -1,7 +1,5 @@
 /**
  * @author Nate Patanjo, Nick Donfris
- *
- *
  */
 import React, { useContext, useReducer, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
@@ -17,9 +15,6 @@ type genderString = "human-male" | "human-female";
 
 interface GenderButtonProps {
   gender: "M" | "F" | "";
-  //selected: boolean;
-  //onPress: () => void;
-  //iconName: "human-female" | "human-male";
 }
 
 const GenderButton = ({ gender }: GenderButtonProps) => {
@@ -60,16 +55,14 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
     const {state, dispatch} = useContext(UserContext);
 
-    const buttonText = () => {
-        buttonType == "login" ? "Log-in" : "Create Account";
-    }
+    const buttonText = buttonType == "login" ? "Log-in" : "Create Account";
 
     const onPress = () => {
         if ( buttonType === "create" ) {
             setUserLoggedIn(state, dispatch);
-            nav.push("HomeScreen");
+            dispatch({type: "setIsLoggedIn", payload: true});
         } else {
-            nav.push( "LoginScreen");
+            nav.navigate("LoginScreen");
         }
     }
 
@@ -86,8 +79,6 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
     );
 
 }
-
-interface Props {}
 
 /**
  * @npatanjo
@@ -106,7 +97,7 @@ interface Props {}
  * an empty array in the useEffect() hook will only run the first time the component is rendered/loaded.
  *
  */
-const CreateAccountScreen = ({}: Props) => {
+export default function CreateAccountScreen(){
     const navigation = useNavigation();
     const { state, dispatch } = useContext(UserContext);
 
@@ -231,4 +222,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateAccountScreen;

@@ -17,7 +17,6 @@ export default function CoursePage({courseName, courseRatings, firstCourseRating
             <View style={styles.title}>
                 <Text style={styles.titleText}>{courseName}</Text>
             </View>
-
         </View>
     );
 }
