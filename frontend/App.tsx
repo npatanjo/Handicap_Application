@@ -3,11 +3,12 @@ import { AsyncStorage, LogBox } from "react-native";
 import { StyleSheet, View } from "react-native";
 import SplashScreen from "screens/SplashScreen";
 import BottomBar from 'components/BottomBar';
-import {setUserStates, validUser} from "utilities/functions/LoginFunctions";
+import {setUserLoggedIn, setUserStates, validUser} from "utilities/functions/LoginFunctions";
 import LoginWrapperScreen from "screens/LoginWrapperScreen";
 import {UserContext} from "utilities/contexts/UserContext";
 import userReducer, {initialUserState, userState} from "utilities/reducers/UserReducer";
 import {NavigationContext} from "@react-navigation/native";
+import LoginScreen from "screens/LoginScreen";
 LogBox.ignoreLogs(["Syntax Error", "JSON Parse error: Unrecognized token"]);
 
 interface Props {
@@ -35,27 +36,26 @@ function DisplayScreen({isLoaded, isLoggedIn }: Props) {
  *  • useContext(NavigationContext)
  */
 export default function App() {
-    const [loading, setLoading] = useState(true);
-    const [loggedIn, setLoggedIn] = useState(false);
     
+    const [ isLoading, setIsLoading ] = useState(true);
+
     const userStates = useContext(UserContext);
     const [state, dispatch] = useReducer(userReducer, userStates as never)
-
-    //const navigation = useContext(NavigationContext);
 
     
     useEffect(() => {
         setTimeout(() => {
-            setLoading(false);
+            setIsLoading(true);
         }, 3500);
         checkLogin();
+        setIsLoading(false);
     }, []);
 
     
     const checkLogin = async () => {
         //const user = await AsyncStorage.getItem('user');
         let isValid = false;
-        let user : userState = {username: 'nick', password: 'gnu', gender: 'M', token:'testToken1'};
+        let user : userState = {username: 'nick', password: 'gnu', gender: 'M', token:'testToken1', isLoggedIn: true};
         try {
             isValid = await validUser(user);
             if (isValid) {
@@ -64,7 +64,8 @@ export default function App() {
         } catch(err){
             console.log(err);
         } finally {
-            setLoggedIn(isValid);
+            setUserLoggedIn(state, isValid);
+            setIsLoading(false);
         }
     }
 
@@ -72,10 +73,11 @@ export default function App() {
     /* return the bottom tabbar component and render the active page (initializes to Search)  */
     return (
         <View style={styles.container}>
-            {loading 
-                && <SplashScreen shouldShow={loading} /> }
             <UserContext.Provider value={{state, dispatch}}>
-                <DisplayScreen isLoaded={loading} isLoggedIn={loggedIn}/>
+            {isLoading 
+                ? <SplashScreen />
+                : <LoginScreen />
+            }
             </UserContext.Provider>
         </View>
     );

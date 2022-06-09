@@ -3,104 +3,91 @@
  *
  *
  */
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
 import colors from "colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigationContainerRef } from "@react-navigation/native";
+import { useNavigation, useNavigationContainerRef } from "@react-navigation/native";
 import fonts from "utilities/Fonts";
-// TODO: move this back
-//import userState from "reducers/UserReducer";
-//import userReducer from "reducers/UserReducer";
+import { UserContext } from "utilities/contexts/UserContext";
+import {setUserLoggedIn} from "utilities/functions/LoginFunctions";
 
-// the state of the user, at any point in the component's lifecycle
-interface userState {
-  username: string;
-  password: string;
-  gender: string;
-  token: string;
-}
-
-// the initial state for a user
-const initialUserState: userState = {
-  username: "",
-  password: "",
-  gender: "",
-  token: "",
-};
-
-// type is the field to update
-// payload is the new value
-type userActions =
-  | { type: "setInitial"; payload: userState }
-  | { type: "setUsername"; payload: string }
-  | { type: "setPassword"; payload: string }
-  | { type: "setGender"; payload: string }
-  | { type: "setToken"; payload: string };
-
-// Helper function to show the user which fields are not filled in
-const getUnsetStates = (checkState: userState): string[] => {
-  let unsetStates: string[] = [];
-  Object.entries(checkState).forEach(([key, value]) => {
-    if ("" === value) {
-      unsetStates.push(key.toString());
-    }
-  });
-  return unsetStates;
-};
-
-const userReducer = (
-  state: userState = initialUserState,
-  action: userActions
-) => {
-  switch (action.type) {
-    case "setInitial":
-      return { ...state, ...action.payload };
-    case "setUsername":
-      return { ...state, username: action.payload };
-    case "setPassword":
-      return { ...state, password: action.payload };
-    case "setGender":
-      return { ...state, gender: action.payload };
-    case "setToken":
-      return { ...state, token: action.payload };
-    default:
-      const unsetStates = getUnsetStates(state);
-      console.log(
-        `Please fill in the following fields: ${unsetStates.join(", ")}.`
-      );
-      return state;
-  }
-};
+type genderString = "human-male" | "human-female";
 
 interface GenderButtonProps {
-  selected: boolean;
-  onPress: () => void;
-  iconName: "human-female" | "human-male";
+  gender: "M" | "F" | "";
+  //selected: boolean;
+  //onPress: () => void;
+  //iconName: "human-female" | "human-male";
 }
 
-// TODO: decompose more.
-const GenderButton = ({ iconName, onPress, selected }: GenderButtonProps) => {
+const GenderButton = ({ gender }: GenderButtonProps) => {
+  const { state, dispatch } = useContext(UserContext);
+
+  const isMale = () => {
+    return gender === "M";
+  };
+
+  const iconName: genderString = isMale() ? "human-male" : "human-female";
+
+  const isSelected = () => {
+    return gender === state.gender;
+  };
+
   return (
     <>
       <TouchableOpacity
-        style={conditionalStyles(selected).genderButton}
-        onPress={onPress}
+        style={conditionalStyles(isSelected()).genderButton}
+        onPress={() => dispatch({ type: "setGender", payload: gender })}
       >
         <MaterialCommunityIcons
           name={iconName}
           size={24}
-          style={conditionalStyles(selected).buttonText}
+          style={conditionalStyles(isSelected()).buttonText}
         />
       </TouchableOpacity>
     </>
   );
 };
 
-interface Props {
-  navigation: any;
+interface NavButtonProps {
+    buttonType: "login" | "create";
+    nav: any;
 }
+
+const NavButton = ({buttonType, nav} : NavButtonProps) => {
+
+    const {state, dispatch} = useContext(UserContext);
+
+    const buttonText = () => {
+        buttonType == "login" ? "Log-in" : "Create Account";
+    }
+
+    const onPress = () => {
+        if ( buttonType === "create" ) {
+            setUserLoggedIn(state, dispatch);
+            nav.push("HomeScreen");
+        } else {
+            nav.push( "LoginScreen");
+        }
+    }
+
+    return (
+        <>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={onPress}
+          >
+            <Text style={styles.buttonText}>{buttonText}</Text>
+          </TouchableOpacity>
+        </>
+
+    );
+
+}
+
+interface Props {}
 
 /**
  * @npatanjo
@@ -119,63 +106,25 @@ interface Props {
  * an empty array in the useEffect() hook will only run the first time the component is rendered/loaded.
  *
  */
-const CreateAccountScreen = ({ navigation }: Props) => {
-  const [user, dispatch] = useReducer(userReducer, {} as any);
-
-  const logger = (str: string, state: userState) => {
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log(str);
-    console.log();
-    console.log("state [ typeof == userState ]");
-    console.log(`username: ${state.username}`);
-    console.log(`password: ${state.password}`);
-    console.log(`gender:   ${state.gender}`);
-    console.log(`token:    ${state.token}`);
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-  };
-
-  useEffect(() => {
-    /* just for testing (this can be commented out) */
-    console.log(user);
-    dispatch({ type: "setUsername", payload: "john_doe_69" });
-    logger(`Set username to: ${user.username}`, user);
-    dispatch({ type: "setPassword", payload: "react_is_a_pain_in_the_ass" });
-    logger(`Set Password to: ${user.gender}`, user);
-    dispatch({ type: "setGender", payload: "" });
-    logger(`Set Gender to: ${user.gender}`, user);
-    dispatch({ type: "setPassword", payload: "ab99_xX*+?URR1010" });
-    logger(`Set Gender to: ${user.token}`, user);
-  }, []);
-
-  const isFemale = () => {
-    if (user.gender === "" || user.gender === undefined) {
-      return false;
-    }
-    return user.gender === "F" ? true : false;
-  };
-
-  const isMale = () => {
-    if (user.gender === "" || user.gender === undefined) {
-      return false;
-    }
-    return user.gender === "M" ? true : false;
-  };
+const CreateAccountScreen = ({}: Props) => {
+    const navigation = useNavigation();
+    const { state, dispatch } = useContext(UserContext);
 
   return (
     <View style={styles.container}>
       <View style={styles.loginContainer}>
-        <Text style={styles.header}> Create Account</Text>
+        <Text style={styles.header}>Create Account</Text>
         <View style={styles.inputContainer}>
           <LoginInputBar
             placeholder={"Username"}
-            value={user.username}
+            value={state.username}
             setValue={(newText: string) =>
               dispatch({ type: "setUsername", payload: newText })
             }
           />
           <LoginInputBar
             placeholder={"Password"}
-            value={user.password}
+            value={state.password}
             setValue={(newText: string) =>
               dispatch({ type: "setPassword", payload: newText })
             }
@@ -183,34 +132,14 @@ const CreateAccountScreen = ({ navigation }: Props) => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          {/* I'm going to abstract this another layer tomorrow so Gender Button only takes A male or female prop */}
-          <GenderButton
-            iconName={"human-female"}
-            onPress={() => {
-              dispatch({ type: "setGender", payload: "F" });
-            }}
-            selected={isFemale()}
-          />
-          <GenderButton
-            iconName={"human-male"}
-            onPress={() => {
-              dispatch({ type: "setGender", payload: "M" });
-            }}
-            selected={isMale()}
-          />
+          <GenderButton gender={"M"} />
+          <GenderButton gender={"F"} />
         </View>
-        <View style={styles.loginButtonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Login Screen")}
-          >
-            <Text style={styles.buttonText}>Create</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.loginContainer} onPress={() => {}}>
-            <Text style={styles.loginButtonText}>LOGIN</Text>
-          </TouchableOpacity>
+            <View style={styles.loginButtonContainer}>
+              <NavButton buttonType={"create"} nav={navigation} />
+              <NavButton buttonType={"login"} nav={navigation} />
+            </View>
         </View>
-      </View>
     </View>
   );
 };

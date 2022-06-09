@@ -40,11 +40,12 @@ export async function validUser(check: UserState) : Promise<boolean> {
     }
 }
 
-export function setUserStates(user: UserState, dispatch: any) {
+export function setUserLoggedIn(user: UserState, dispatch: any) {
     dispatch({type: "setUsername", payload: user.username});
     dispatch({type: "setPassword", payload: user.password});
     dispatch({type: "setGender", payload: user.gender});
     dispatch({type: "setToken", payload: user.token})
+    dispatch({type: "setIsLoggedIn", payload: true})
 }
 
 

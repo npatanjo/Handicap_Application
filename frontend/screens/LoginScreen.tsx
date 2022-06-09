@@ -10,40 +10,98 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
 import colors from "colors";
 import {UserContext} from "utilities/contexts/UserContext";
+import {NavigationContainer, useNavigation} from "@react-navigation/native";
+import {setUserLoggedIn} from "utilities/functions/LoginFunctions";
 
-interface Props {
-  navigation: any;
+interface NavButtonProps {
+    buttonType: "login" | "create";
+    nav: any;
 }
-
-const LoginScreen = ({ navigation }: Props) => {
+const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
     const {state, dispatch} = useContext(UserContext);
-    
+
+    const buttonText = () => {
+        buttonType == "login" ? "Log-in" : "Create Account";
+    }
+
+    const onPress = () => {
+        if ( buttonType === "create" ) {
+            nav.push("CreateAccountScreen")
+        } else {
+            setUserLoggedIn(state, dispatch);
+            nav.push("HomeScreen")
+        }
+    }
+
+    return (
+        <>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={onPress}
+          >
+            <Text style={styles.buttonText}>{buttonText}</Text>
+          </TouchableOpacity>
+        </>
+
+    );
+}
+
+interface LoginInputProps {
+    type: "username" | "password";
+}
+
+const LoginInput = ({type} : LoginInputProps) => {
+
+    const {state, dispatch} = useContext(UserContext);
+    const placeholder = () => {
+        return type === "username" ? "Username" : "Password";
+    }
+
+    const value = () => {
+        return type === "username" ? state.username : state.password;
+    }
+
+    const setValue = (text: string) : void => {
+        if ( type === "username" ) {
+            dispatch({type: "setUsername", payload: text});
+        } else {
+            dispatch({type: "setPassword", payload: text});
+        }
+    }
+
+    const SecureTextEntry = () => {
+        return type === "password" ? true : false;
+    }
+
+    return (
+        <LoginInputBar value={value()} setValue={setValue} placeholder={placeholder()} secureTextEntry={SecureTextEntry()}/>
+    );
+}
+
+
+interface Props {
+}
+
+const LoginScreen = ({ }: Props) => {
+
+    const navigation = useNavigation();
+    console.log(navigation);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.loginContainer}>
-        <Text style={styles.header}> Account Login </Text>
-        <LoginInputBar placeholder={"Username"} value={state.username} setValue={(text)=>{dispatch({type: 'setUsername', payload: text})}} />
-        <LoginInputBar placeholder={"Password"} value={state.password} setValue={(text)=>{dispatch({type: 'setPassword', payload: text})}} secureTextEntry={true} />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate()}
-          >
-            <Text style={styles.buttonText}>login</Text>
-          </TouchableOpacity>
+        <View style={styles.container}>
+          <View style={styles.loginContainer}>
+            <Text style={styles.header}> Account Login </Text>
+            <LoginInput type={"username"}/>
+            <LoginInput type={"password"}/>
+            <View style={styles.buttonContainer}>
+                <NavButton nav={navigation} buttonType={"login"}/>
+            </View>
+            <View style={styles.buttonContainer}>
+                <NavButton nav={navigation} buttonType={"create"}/>
+            </View>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('')}
-          >
-            <Text style={styles.buttonText}>create account</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
   );
 };
 

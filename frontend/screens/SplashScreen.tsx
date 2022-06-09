@@ -1,48 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
-import LottieView from "lottie-react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import colors from "utilities/Colors";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {NavigationContainer} from "@react-navigation/native";
+import LoadingComponent from "components/LoadingComponent";
+import CreateAccountScreen from "screens/CreateAccountScreen";
+import LoginScreen from "screens/LoginScreen";
+import SearchCourseScreen from "screens/SearchCourseScreen";
+import CoursePage from "screens/CoursePage";
+import AccountScreen from "screens/AccountScreen";
+import SavedCourseScreen from "screens/SavedCourseScreen";
+import HomeScreen from "screens/HomeScreen";
 
-interface Props {
-  shouldShow?: boolean;
-}
+interface Props {}
 
+const Stack = createNativeStackNavigator();
 /**
  * Will use this screen when waiting for api check of user login.
  *
  */
-export default function SplashScreen({ shouldShow }: Props) {
-  const [animation, setAnimation] = useState<LottieView | null>();
+export default function SplashScreen({}: Props) {
 
-  useEffect(() => {
-    if (animation) {
-      animation.play();
+    // set context 
+    // create a loading context
+    // call loading context in all initial routes
+    const LoadingWrapper = () => {
+        return (
+            <LoadingComponent shouldShow={ true }/>
+        );
     }
-    // add effect to title
-  }, [animation]);
 
-  if (shouldShow) {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>Handicap Application</Text>
-        </View>
-        <LottieView
-          ref={(animation) => {
-            setAnimation(animation);
-          }}
-          source={require("assets/load_golfball_animation.json")}
-          autoSize={true}
-          style={styles.animationContainer}
-          autoPlay={true}
-          loop={true}
-          resizeMode={"contain"}
-        />
-      </View>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="LoadingComponent"
+                screenOptions={{
+                    headerShown: false,
+                    gestureEnabled: true,
+                }}
+            >
+                <Stack.Screen name="LoadingComponent" component={LoadingWrapper} />
+                <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                <Stack.Screen name="CreateAccountScreen" component={CreateAccountScreen} />
+                <Stack.Screen name="Login Screen" component={LoginScreen} />
+                <Stack.Screen name="CoursePage" component={CoursePage} />
+                <Stack.Screen name="SearchCoursePage" component={SearchCourseScreen} />
+                <Stack.Screen name="AccoutScreen" component={AccountScreen} />
+                <Stack.Screen name="SavedCourseScreen" component={SavedCourseScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
-  } else {
-    return <View style={styles.container}></View>;
-  }
+
 }
 
 const styles = StyleSheet.create({

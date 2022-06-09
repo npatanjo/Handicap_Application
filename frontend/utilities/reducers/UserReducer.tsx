@@ -4,7 +4,8 @@ export type userState = {
     username: string,
     password: string,
     gender: 'M' | 'F' | '',
-    token: string
+    token: string,
+    isLoggedIn: boolean,
 }
 
 // the initial state for a user
@@ -13,6 +14,7 @@ export const initialUserState: userState = {
     password: '',
     gender: '',
     token: '',
+    isLoggedIn: false,
 }
 
 // type is the field to update
@@ -22,7 +24,8 @@ export type userActions =
     | {type: 'setUsername', payload: string} 
     | {type: 'setPassword', payload: string} 
     | {type: 'setGender', payload: string} 
-    | {type: 'setToken', payload: string};
+    | {type: 'setToken', payload: string}
+    | {type: 'setIsLoggedIn', payload: boolean};
     
 // Helper function to show the user which fields are not filled in
 const getUnsetStates = (checkState: userState) : string[] => {
@@ -48,6 +51,8 @@ const userReducer = (state: userState = initialUserState, action: userActions) =
             return {...state, gender: action.payload};
         case 'setToken':
             return {...state, token: action.payload};
+        case 'setIsLoggedIn':
+            return {...state, token: action.payload};
         default:
             const unsetStates = getUnsetStates(state);
             console.log(`Please fill in the following fields: ${unsetStates.join(', ')}.`)
@@ -56,10 +61,4 @@ const userReducer = (state: userState = initialUserState, action: userActions) =
 }
 
 
-
-
 export default userReducer;
-
-
-
-
