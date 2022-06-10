@@ -2,23 +2,21 @@
 
 ---
  * [working api with mongodb](https://golf-handicap-api-ts.herokuapp.com/)  
- * [repo](https://github.com/ndonfris/backend_api)
- * app will be on __vercel__ by tomorrow
+ * [repo](https://github.com/ndonfris/backend_api)  
+ * app will be on __vercel__ by tomorrow  
  * I converted the backend to native mongodb instead of mongoose since your
      calls weren't async and would crash the rendering of the page (like during
-     a search)
-     * most of the methods are the same name though
+     a search)  
+     * most of the methods are the same name though  
      * also I provided a very documented class to wrap the mongodb connections,
-       you'll find it pretty easy to use.
+       you'll find it pretty easy to use.  
  * Also if you notice the new api keys in the config dir, I think you'll be
-     impressed with the feature I'm adding.
+     impressed with the feature I'm adding.  
  * if you click the working api link: `https://golf-handicap-api-ts.herokuapp.com/`
     with the blank endpoint, a page displaying 'hit' means that the server is
-    running healthy.
- * 
+    running healthy.  
 
-
-
+---
 
 [ _PROJECT BOARD_ ](https://github.com/npatanjo/Handicap_Application/projects/1)
 
