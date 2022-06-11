@@ -1,5 +1,7 @@
 # Handicap_Application
 
+* [api repo](https://github.com/ndonfris/backend_api/deployments)
+* [api link](https://golf-handicap-api-ts.herokuapp.com/)
 ___
 [ _PROJECT BOARD_ ](https://github.com/npatanjo/Handicap_Application/projects/1)
 
