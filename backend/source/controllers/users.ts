@@ -18,13 +18,16 @@ import User from '../models/users';
  *
  */
 const createUser = (req: Request, res: Response, next: NextFunction) => {
+<<<<<<< HEAD
     let { username, password, gender, token } = req.body;
+=======
+    let { username, password, gender } = req.body;
+>>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
     const user = new User({
         _id: new mongoose.Types.ObjectId(), //mongoose build id generator
         username,
         password,
-        gender,
-        token
+        gender
     });
 
     return user
@@ -42,6 +45,13 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
+<<<<<<< HEAD
+=======
+const putUser = (req: Request, res: Response, next: NextFunction) => {
+    return req.body;
+};
+
+>>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
 /**
  *
  * @param req
@@ -49,6 +59,10 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
  * @param next
  */
 const deleteUser = (req: Request, res: Response, next: NextFunction) => {
+<<<<<<< HEAD
+=======
+    console.log('TLDKJFLSKDJF');
+>>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
     let u = req.params.u;
     console.log(u);
     User.findOneAndRemove({ username: u })
@@ -89,6 +103,7 @@ const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
+<<<<<<< HEAD
 const getUsersByName = (req: Request, res: Response, next: NextFunction) => {
     User.findOne({ username: req.params.u })
         .exec()
@@ -124,3 +139,8 @@ const updatePassword = (req: Request, res: Response, next: NextFunction) => {
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {};
 
 export { createUser, getAllUsers, authenticateUser, deleteUser, getUsersByName, updatePassword };
+=======
+const authenticateUser = (req: Request, res: Response, next: NextFunction) => {};
+
+export { createUser, getAllUsers, authenticateUser, putUser, deleteUser };
+>>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef

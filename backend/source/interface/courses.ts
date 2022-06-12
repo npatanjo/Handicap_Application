@@ -13,6 +13,7 @@ import { Document } from 'mongoose';
  */
 export default interface ICourse extends Document {
     name: string;
+<<<<<<< HEAD
     ratings: [
         {
             color: string;
@@ -25,4 +26,7 @@ export default interface ICourse extends Document {
             back9: string;
         }
     ];
+=======
+    ratings: [{}];
+>>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
 }

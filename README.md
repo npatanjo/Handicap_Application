@@ -82,6 +82,7 @@ function Searchpage({}: Props) {
 }
 ```
 
+<<<<<<< HEAD
 ---
 
 ### API ROUTES
@@ -145,6 +146,36 @@ localhost:1337/api/{route}
 - Postgres?
 - Add Login Api
 - Add dropdown
+=======
+#### NATE TODO [ __NEW__ ]:
+* finish RESTful API for the users
+* make RESTful API for golf courses
+
+
+#### NICK TODO [ __NEW__ ]: 
+* Add filter to searchbar and implement results components ✔
+* Finish Log-In API using rn-async storage (just need backend) ✖
+* Fix error with search results using spread operator ✔
+* Create union-type of context types for wrapping multiple components ✔
+* Research reducer hook ✔
+* Decomp Splash Screen to a have animation in external component ✔
+* add saved screen and functionality that ( requires backend ) ✖
+* add filter to seachContext ✖
+* styling ✖
+* re-implement screens ✖
+___
+* Redux 
+* Postgres?
+
+___
+##### Resources:  
+
+* [The Nerdy Canuck](https://www.youtube.com/channel/UCmG1UbEI0iFE1tAw2SyvvXg):  
+    * [Restful API with NodeJS, Express & Typescript](https://www.youtube.com/watch?v=vyz47fUXcxU&t=1056s)  
+* [Best React Native Documentation](https://www.reactnative.express/)  
+* Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)  
+* [Package Search](https://www.npmjs.com/)
+>>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
 
 ---
 

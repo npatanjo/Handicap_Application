@@ -1,21 +1,20 @@
+"use strict";
 /**
  *
  * @author Nate Patnjo
  *
  */
-
-import http from 'http';
-import bodyParser from 'body-parser';
-import express from 'express';
-import logging from './config/logging';
-import config from './config/config';
-import mongoose from 'mongoose';
-import userRoutes from './routes/users';
-<<<<<<< HEAD
-import courseRoutes from './routes/courses';
-=======
->>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const http_1 = __importDefault(require("http"));
+const body_parser_1 = __importDefault(require("body-parser"));
+const express_1 = __importDefault(require("express"));
+const logging_1 = __importDefault(require("./config/logging"));
+const config_1 = __importDefault(require("./config/config"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const users_1 = __importDefault(require("./routes/users"));
 /**
  *
  * determains where our logs are coming from
@@ -24,7 +23,6 @@ import courseRoutes from './routes/courses';
  *
  */
 const NAMESPACE = 'Server';
-
 /**
  *
  * defines behavior
@@ -32,8 +30,7 @@ const NAMESPACE = 'Server';
  * @constant app
  *
  */
-const app = express();
-
+const app = (0, express_1.default)();
 /**
  *
  * @todo should be changed to grab from config file as opposed to direct
@@ -42,7 +39,6 @@ const app = express();
  * @purpose connect to mongo
  *
  */
-
 /**mongoose
     .connect(config.mongo.url, config.mongo.options)
     .then((result) => {
@@ -52,16 +48,14 @@ const app = express();
         logging.error(NAMESPACE, error.message, error);
     });
     */
-
-mongoose
-    .connect('mongodb+srv://dev:gnu@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config.mongo.options)
+mongoose_1.default
+    .connect('mongodb+srv://dev:gnu711@cluster0.98mj3.mongodb.net/hanicap-database?retryWrites=true&w=majority', config_1.default.mongo.options)
     .then((result) => {
-        logging.info(NAMESPACE, 'Mongo Connected');
-    })
+    logging_1.default.info(NAMESPACE, 'Mongo Connected');
+})
     .catch((error) => {
-        logging.error(NAMESPACE, error.message, error);
-    });
-
+    logging_1.default.error(NAMESPACE, error.message, error);
+});
 /**
  *
  * @purpose logging all requests
@@ -69,32 +63,27 @@ mongoose
  */
 app.use((req, res, next) => {
     /** Log the req */
-    logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
-
+    logging_1.default.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
     res.on('finish', () => {
         /** Log the res */
-        logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
+        logging_1.default.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
     });
-
     next();
 });
-
 /**
  *
  * allows the use of nested json for later use
  * @purpose parsing the requests
  *
  */
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 /**
  *
  * takes care of json parsing and stringfy on the frontend
  * @purpose parsing the requests
  *
  */
-app.use(bodyParser.json());
-
+app.use(body_parser_1.default.json());
 /**
  *
  * allows for PUT, POST, PATCH, DELETE, and GET
@@ -106,26 +95,18 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
     if (req.method == 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
         return res.status(200).json({});
     }
-
     next();
 });
-
 /**
  *
  * @purpose routes
  *
  */
-app.use('/api/users', userRoutes);
-<<<<<<< HEAD
-app.use('/api/courses', courseRoutes);
-=======
->>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
-
+app.use('/api/users', users_1.default);
 /**
  *
  * error handling
@@ -140,12 +121,10 @@ app.use('/api/courses', courseRoutes);
  */
 app.use((req, res, next) => {
     const error = new Error('Not found');
-
     res.status(404).json({
         message: error.message
     });
 });
-
 /** create server: to start server: yarn serve*/
 /**
  *
@@ -154,6 +133,5 @@ app.use((req, res, next) => {
  *
  *
  */
-const httpServer = http.createServer(app);
-
-httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));
+const httpServer = http_1.default.createServer(app);
+httpServer.listen(config_1.default.server.port, () => logging_1.default.info(NAMESPACE, `Server is running ${config_1.default.server.hostname}:${config_1.default.server.port}`));
