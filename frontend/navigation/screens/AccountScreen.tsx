@@ -3,7 +3,6 @@ import React, {useContext} from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import {AuthContext} from "utilities/contexts/AuthContext";
 import {UserContext} from "utilities/contexts/UserContext";
-import {initialUserState} from "utilities/reducers/UserReducer";
 
 interface Props {
 
@@ -33,24 +32,22 @@ function InlineText({text1, text2} : InlineProps) {
 
 const AccountScreen = ({}: Props) => {
 
-    //const {state, dispatch} = useContext(UserContext);
-
-    const {state} = useContext(UserContext);
-    const { dispatch } = useContext(AuthContext);
+    const {userState} = useContext(UserContext);
+    const { authDispatch } = useContext(AuthContext);
 
 
     const logout = () => {
-        dispatch({type: "LOGGED_IN", payload: false});
-        dispatch({type: "LOADING", payload: false});
+        authDispatch({type: "LOGGED_IN", payload: false});
+        authDispatch({type: "LOADING", payload: false});
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Account Course Screen</Text>
             <Seperator />
-            <InlineText text1={"USERNAME: "} text2={state.username} />
+            <InlineText text1={"USERNAME: "} text2={userState.username} />
             <Seperator />
-            <InlineText text1={"GENDER: "} text2={state.gender} />
+            <InlineText text1={"GENDER: "} text2={userState.gender} />
             <Seperator />
             <TouchableOpacity style={styles.button} onPress={logout}>
                 <Text style={styles.buttonText}>LOG OUT</Text>

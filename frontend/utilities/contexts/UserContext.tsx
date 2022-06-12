@@ -3,7 +3,7 @@ import {initialUserState, userActions} from "utilities/reducers/UserReducer";
 
 
 export const UserContext = createContext({
-    state: initialUserState,
-    dispatch: ({type, payload}: userActions) => {},
+    userState: initialUserState,
+    userDispatch: ({type, payload}: userActions) => {},
 })
 

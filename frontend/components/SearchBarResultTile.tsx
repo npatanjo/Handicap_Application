@@ -29,7 +29,7 @@ export default function SearchBarResultTile({courseName, courseRatings, firstCou
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={() => navigation.navigate.push(CoursePage)}
+            onPress={() => navigation.navigate('CoursePage', {courseName: courseName, courseRatings: courseRatings})}
         >
             <View style={styles.title}>
                 <Text>{courseName}</Text>

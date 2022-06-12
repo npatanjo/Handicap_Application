@@ -18,7 +18,7 @@ interface GenderButtonProps {
 }
 
 const GenderButton = ({ gender }: GenderButtonProps) => {
-  const { state, dispatch } = useContext(UserContext);
+  const { userState, userDispatch } = useContext(UserContext);
 
   const isMale = () => {
     return gender === "M";
@@ -27,14 +27,14 @@ const GenderButton = ({ gender }: GenderButtonProps) => {
   const iconName: genderString = isMale() ? "human-male" : "human-female";
 
   const isSelected = () => {
-    return gender === state.gender;
+    return gender === userState.gender;
   };
 
   return (
     <>
       <TouchableOpacity
         style={conditionalStyles(isSelected()).genderButton}
-        onPress={() => dispatch({ type: "setGender", payload: gender })}
+        onPress={() => userDispatch({ type: "setGender", payload: gender })}
       >
         <MaterialCommunityIcons
           name={iconName}
@@ -53,14 +53,14 @@ interface NavButtonProps {
 
 const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
-    const {state, dispatch} = useContext(UserContext);
+    const {userState, userDispatch} = useContext(UserContext);
 
     const buttonText = buttonType == "login" ? "Log-in" : "Create Account";
 
     const onPress = () => {
         if ( buttonType === "create" ) {
-            setUserLoggedIn(state, dispatch);
-            dispatch({type: "setIsLoggedIn", payload: true});
+            setUserLoggedIn(userState, userDispatch);
+            userDispatch({type: "setIsLoggedIn", payload: true});
         } else {
             nav.navigate("LoginScreen");
         }
@@ -99,7 +99,7 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
  */
 export default function CreateAccountScreen(){
     const navigation = useNavigation();
-    const { state, dispatch } = useContext(UserContext);
+    const { userState: state, userDispatch: dispatch } = useContext(UserContext);
 
   return (
     <View style={styles.container}>

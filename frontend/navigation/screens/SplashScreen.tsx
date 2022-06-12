@@ -8,7 +8,7 @@ import {AuthContext} from "utilities/contexts/AuthContext";
  *
  */
 export default function SplashScreen() {
-    const {state} = useContext(AuthContext);
+    const {authState} = useContext(AuthContext);
 
     // set context 
     // create a loading context
@@ -20,7 +20,7 @@ export default function SplashScreen() {
             alignItems: "center"
         }}>
             {
-                state.isLoading 
+                authState.isLoading 
                 ? <LoadingComponent showSplash={ true }/>
                 : <></>
             }

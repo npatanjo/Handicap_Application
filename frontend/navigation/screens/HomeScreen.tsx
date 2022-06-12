@@ -9,11 +9,11 @@ interface Props {}
 
 const HomeScreen = ({}: Props) => {
 
-    const {state, dispatch} = useContext(UserContext);
+    const {userState, userDispatch} = useContext(UserContext);
 
     return (
         <View>
-             {/*   state.isLoggedIn ? <BottomBar/> : <HomeScreen /> */}
+             {/*   userState.isLoggedIn ? <BottomBar/> : <HomeScreen /> */}
         </View>
     );
 

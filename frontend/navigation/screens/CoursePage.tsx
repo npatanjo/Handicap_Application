@@ -1,22 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import {CourseRating} from "utilities/GolfCourse";
+import {CourseRating, GolfCourse} from "utilities/GolfCourse";
 
 
 interface Props {
     courseName: string;
     courseRatings: CourseRating[];
-    firstCourseRatings: CourseRating[];
-    image?: string; // just incase later
 }
 
-export default function CoursePage({courseName, courseRatings, firstCourseRatings, image}: Props){
+
+export default function CoursePage({courseName, courseRatings}: Props){
+    console.log("CoursePage: " + courseName);
 
     return ( 
         <View style={styles.container}>
-            <View style={styles.title}>
-                <Text style={styles.titleText}>{courseName}</Text>
-            </View>
+            <Text style={styles.titleText}>{courseName}</Text>
         </View>
     );
 }
@@ -33,11 +31,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 50,
     },
     titleText: {
         fontSize: 30,
         fontWeight: 'bold',
         color: '#000',
+        backgroundColor: "blue",
     },
     rating: {
         flex: 1,

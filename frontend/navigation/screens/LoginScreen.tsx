@@ -17,7 +17,7 @@ interface NavButtonProps {
 }
 const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
-    const {state, dispatch} = useContext(UserContext);
+    const {userState, userDispatch} = useContext(UserContext);
 
     const buttonText = buttonType == "login" ? "Log-in to Account" : "Create an Account";
 
@@ -25,7 +25,7 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
         if ( buttonType === "create" ) {
             nav.navigate("CreateAccountScreen")
         } else {
-            setUserLoggedIn(state, dispatch);
+            setUserLoggedIn(userState, userDispatch);
         }
     }
 
@@ -47,21 +47,21 @@ interface LoginInputProps {
 
 const LoginInput = ({type} : LoginInputProps) => {
 
-    const {state, dispatch} = useContext(UserContext);
+    const {userState, userDispatch} = useContext(UserContext);
 
     const placeholder = () => {
         return type === "username" ? "Username" : "Password";
     }
 
     const value = () => {
-        return type === "username" ? state.username : state.password;
+        return type === "username" ? userState.username : userState.password;
     }
 
     const setValue = (text: string) : void => {
         if ( type === "username" ) {
-            dispatch({type: "setUsername", payload: text});
+            userDispatch({type: "setUsername", payload: text});
         } else {
-            dispatch({type: "setPassword", payload: text});
+            userDispatch({type: "setPassword", payload: text});
         }
     }
 

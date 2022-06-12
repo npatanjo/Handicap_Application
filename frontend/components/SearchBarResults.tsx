@@ -1,15 +1,9 @@
 import {NavigationContext} from "@react-navigation/native";
 import React, {useContext} from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  Text,
-} from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import colors from "utilities/Colors";
 import {SearchQueryContext} from "utilities/contexts/SearchContext";
 import { GolfCourse } from "utilities/GolfCourse";
-import PopupDebugButton from "./PopupDebugButton";
 import SearchBarResultTile from "./SearchBarResultTile";
 
 
@@ -47,6 +41,7 @@ export default function SearchBarResults() {
                     data={state.results}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={renderItem}
+                    showsVerticalScrollIndicator={false}
                     numColumns={1}
                     style={styles.list}
                     extraData={state.results}

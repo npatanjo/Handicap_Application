@@ -39,7 +39,7 @@ export default function HomeTabStack() {
                 options={{
                     tabBarLabel: 'Saved',
                     tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="heart" color={color} size={26} />
+                        <MaterialCommunityIcons name="golf" color={color} size={26} />
                     ),
                 }}
             />
