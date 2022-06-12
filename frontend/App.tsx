@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useMemo, useReducer } from "react";
 import { LogBox } from "react-native";
 import SplashScreen from "screens/SplashScreen";
-import {validUser} from "utilities/functions/LoginFunctions";
-import {UserContext} from "utilities/contexts/UserContext";
-import userReducer, {userState} from "utilities/reducers/UserReducer";
-import {AuthContext} from "utilities/contexts/AuthContext";
-import authReducer, {} from "utilities/reducers/AuthReducer";
+import {validUser} from "utils/functions/LoginFunctions";
+import {UserContext} from "utils/contexts/UserContext";
+import userReducer, {userState} from "utils/reducers/UserReducer";
+import {AuthContext} from "utils/contexts/AuthContext";
+import authReducer, {} from "utils/reducers/AuthReducer";
 import AuthStack from "screenStacks/AuthStack";
 import HomeTabStack from "tabStacks/HomeTabStack";
 import {NavigationContainer} from "@react-navigation/native";
+import {handleSplashLogin} from "utils/functions/LoginHelpers";
 
 
 
@@ -33,32 +34,30 @@ export default function App() {
 
 
     useEffect(() => {
-        setTimeout(() => {
-            checkLogin();
-            authDispatch({type: "LOADING", payload: false});
-        }, 3500);
+        async function CheckLogin() {
+            const shouldLogin = await handleSplashLogin();
+            if (shouldLogin) {
+                authDispatch({type: "LOGGED_IN", payload: shouldLogin});
+            }
+        }
         authDispatch({type: "LOADING", payload: true});
+        CheckLogin();
+        console.log("App.tsx: useEffect: authState", authState);
+        authDispatch({type: "LOADING", payload: false});
     }, []);
 
     useEffect(() => {
-        checkLogin();
-        authDispatch({type: "LOGGED_IN", payload: true});
+        async function CheckLogin() {
+            const shouldLogin = await handleSplashLogin();
+            if (shouldLogin) {
+                authDispatch({type: "LOGGED_IN", payload: shouldLogin});
+            }
+
+        }
+        CheckLogin();
+        console.log("App.tsx: useEffect2: authState", authState);
     }, [authState.isLoading]);
     
-    const checkLogin = async () => {
-        //const user = await AsyncStorage.getItem('user');
-        if (authState.isLoading || !authState.isLoggedIn) {
-            let isValid = false;
-            let user : userState = {username: 'nick', password: 'gnu', gender: 'M', token:'testToken1', isLoggedIn: true};
-            try {
-                isValid = await validUser(user);
-            } catch(err){
-                console.log(err);
-            } finally {
-                authDispatch({type: 'LOGGED_IN', payload: isValid });
-            }
-        }
-    }
 
     const authValues = {
         authState,

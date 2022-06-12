@@ -3,10 +3,10 @@ import { View, StyleSheet, Keyboard } from "react-native";
 import SearchBar from "components/SearchBar";
 import { SearchQueryContext } from "contexts/SearchContext";
 import SearchBarResults from "components/SearchBarResults";
-import {GolfCourse} from "utilities/GolfCourse";
+import {GolfCourse} from "utils/GolfCourse";
 import SearchBarFilter from "components/SearchBarFilter";
-import {fetchResults} from "utilities/functions/SearchHelpers";
-import searchReducer from "utilities/reducers/SearchReducer";
+import {fetchResults} from "utils/functions/SearchHelpers";
+import searchReducer from "utils/reducers/SearchReducer";
 
 // MOVE STATE INTO HERE
 // export const SearchContext = React.createContext(null);

@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {initialUserState, userActions} from "utilities/reducers/UserReducer";
+import {initialUserState, userActions} from "utils/reducers/UserReducer";
 
 
 export const UserContext = createContext({

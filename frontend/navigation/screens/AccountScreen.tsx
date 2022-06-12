@@ -1,8 +1,9 @@
 
 import React, {useContext} from "react";
-import  { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import {AuthContext} from "utilities/contexts/AuthContext";
-import {UserContext} from "utilities/contexts/UserContext";
+import  { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {AuthContext} from "utils/contexts/AuthContext";
+import {UserContext} from "utils/contexts/UserContext";
+import {handleLogoutAuth} from "utils/functions/LoginHelpers";
 
 interface Props {
 
@@ -32,13 +33,13 @@ function InlineText({text1, text2} : InlineProps) {
 
 const AccountScreen = ({}: Props) => {
 
-    const {userState} = useContext(UserContext);
+    const { userState } = useContext(UserContext);
     const { authDispatch } = useContext(AuthContext);
 
 
-    const logout = () => {
+    const logout = async () => {
         authDispatch({type: "LOGGED_IN", payload: false});
-        authDispatch({type: "LOADING", payload: false});
+        handleLogoutAuth();
     }
 
     return (

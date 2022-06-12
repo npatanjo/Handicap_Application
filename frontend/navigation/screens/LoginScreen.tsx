@@ -7,9 +7,11 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import LoginInputBar from "components/LoginInputBar";
 import colors from "colors";
-import {UserContext} from "utilities/contexts/UserContext";
+import {UserContext} from "utils/contexts/UserContext";
 import {useNavigation} from "@react-navigation/native";
-import {setUserLoggedIn} from "utilities/functions/LoginFunctions";
+import {handleLoginToAccount, storeAllUserData, userHasEmptyFields} from "utils/functions/LoginHelpers";
+import {User} from "utils/interfaces/User";
+import {AuthContext} from "utils/contexts/AuthContext";
 
 interface NavButtonProps {
     buttonType: "login" | "create";
@@ -17,15 +19,27 @@ interface NavButtonProps {
 }
 const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
+    const {authState, authDispatch} = useContext(AuthContext);
     const {userState, userDispatch} = useContext(UserContext);
 
     const buttonText = buttonType == "login" ? "Log-in to Account" : "Create an Account";
 
-    const onPress = () => {
+    const onPress = async () => {
         if ( buttonType === "create" ) {
             nav.navigate("CreateAccountScreen")
         } else {
-            setUserLoggedIn(userState, userDispatch);
+            let successfulLogin = false;
+            if (userState.username && userState.password) {
+                successfulLogin = await handleLoginToAccount(userState);
+            }
+            authDispatch({type: "LOGGED_IN", payload: successfulLogin})
+            if (successfulLogin) {
+                userDispatch({type: "setUsername", payload: userState.username});
+                userDispatch({type: "setPassword", payload: userState.password});
+                userDispatch({type: "setGender", payload: "M"});
+                userDispatch({type: "setToken", payload: "1"});
+                storeAllUserData(userState);
+            }
         }
     }
 
@@ -49,13 +63,7 @@ const LoginInput = ({type} : LoginInputProps) => {
 
     const {userState, userDispatch} = useContext(UserContext);
 
-    const placeholder = () => {
-        return type === "username" ? "Username" : "Password";
-    }
-
-    const value = () => {
-        return type === "username" ? userState.username : userState.password;
-    }
+    const value = type === "username" ? userState.username : userState.password;
 
     const setValue = (text: string) : void => {
         if ( type === "username" ) {
@@ -65,12 +73,12 @@ const LoginInput = ({type} : LoginInputProps) => {
         }
     }
 
-    const SecureTextEntry = () => {
-        return type === "password" ? true : false;
-    };
+    const placeholder = type === "username" ? "Username" : "Password";
+
+    const SecureTextEntry = type === "password" ? true : false;
 
     return (
-        <LoginInputBar value={value()} setValue={setValue} placeholder={placeholder()} secureTextEntry={SecureTextEntry()}/>
+        <LoginInputBar value={value} setValue={setValue} placeholder={placeholder} secureTextEntry={SecureTextEntry}/>
     );
 }
 

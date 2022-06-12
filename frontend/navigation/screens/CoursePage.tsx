@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import {CourseRating, GolfCourse} from "utilities/GolfCourse";
+import {CourseRating, GolfCourse} from "utils/GolfCourse";
 
 
 interface Props {

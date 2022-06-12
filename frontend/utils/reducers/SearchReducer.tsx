@@ -1,4 +1,4 @@
-import {GolfCourse} from "utilities/GolfCourse";
+import {GolfCourse} from "utils/GolfCourse";
 
 // the possible states for the user type
 export type searchState = {

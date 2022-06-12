@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import colors from "utilities/Colors";
+import colors from "utils/Colors";
 
 interface AProps {
     visible: boolean;

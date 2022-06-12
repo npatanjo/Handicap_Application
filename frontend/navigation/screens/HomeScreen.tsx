@@ -1,7 +1,7 @@
 import BottomBar from "components/BottomBar";
 import React, {createContext, useContext} from "react";
 import {View} from "react-native";
-import {UserContext} from "utilities/contexts/UserContext";
+import {UserContext} from "utils/contexts/UserContext";
 
 
 interface Props {}

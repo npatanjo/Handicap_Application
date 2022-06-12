@@ -1,9 +1,9 @@
 import {NavigationContext} from "@react-navigation/native";
 import React, {useContext} from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
-import colors from "utilities/Colors";
-import {SearchQueryContext} from "utilities/contexts/SearchContext";
-import { GolfCourse } from "utilities/GolfCourse";
+import colors from "utils/Colors";
+import {SearchQueryContext} from "utils/contexts/SearchContext";
+import { GolfCourse } from "utils/GolfCourse";
 import SearchBarResultTile from "./SearchBarResultTile";
 
 

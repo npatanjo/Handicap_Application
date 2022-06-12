@@ -7,9 +7,11 @@ import LoginInputBar from "components/LoginInputBar";
 import colors from "colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation, useNavigationContainerRef } from "@react-navigation/native";
-import fonts from "utilities/Fonts";
-import { UserContext } from "utilities/contexts/UserContext";
-import {setUserLoggedIn} from "utilities/functions/LoginFunctions";
+import fonts from "utils/Fonts";
+import { UserContext } from "utils/contexts/UserContext";
+import {setUserLoggedIn} from "utils/functions/LoginFunctions";
+import {AuthContext} from "utils/contexts/AuthContext";
+import {handleCreateAccount, storeAllUserData} from "utils/functions/LoginHelpers";
 
 type genderString = "human-male" | "human-female";
 
@@ -31,6 +33,7 @@ const GenderButton = ({ gender }: GenderButtonProps) => {
   };
 
   return (
+
     <>
       <TouchableOpacity
         style={conditionalStyles(isSelected()).genderButton}
@@ -53,14 +56,20 @@ interface NavButtonProps {
 
 const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
+    const {authDispatch} = useContext(AuthContext);
     const {userState, userDispatch} = useContext(UserContext);
 
     const buttonText = buttonType == "login" ? "Log-in" : "Create Account";
 
-    const onPress = () => {
+    const onPress = async () => {
         if ( buttonType === "create" ) {
-            setUserLoggedIn(userState, userDispatch);
-            userDispatch({type: "setIsLoggedIn", payload: true});
+            let successfulLogin = false;
+            userDispatch({type: "setToken", payload: '1'});
+            successfulLogin = await handleCreateAccount(userState);
+            authDispatch({type: "LOGGED_IN", payload: successfulLogin})
+            if (successfulLogin) {
+                storeAllUserData(userState);
+            }
         } else {
             nav.navigate("LoginScreen");
         }
@@ -68,14 +77,13 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
 
     return (
         <>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={onPress}
-          >
-            <Text style={styles.buttonText}>{buttonText}</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={onPress}
+            >
+                <Text style={styles.buttonText}>{buttonText}</Text>
+            </TouchableOpacity>
         </>
-
     );
 
 }

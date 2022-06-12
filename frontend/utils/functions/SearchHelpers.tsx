@@ -1,6 +1,6 @@
 
 import COURSES from '../../BACKING_FILE.json';
-import { GolfCourse } from 'utilities/GolfCourse';
+import { GolfCourse } from 'utils/GolfCourse';
 
 export async function fetchFilter(search: string) : Promise<string[]> {
     let filteredCourses: string[] = [];

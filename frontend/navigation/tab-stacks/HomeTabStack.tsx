@@ -7,7 +7,7 @@ import { StyleSheet, View, Text } from "react-native";
 import SearchStack from "screenStacks/SearchStack";
 import SavedStack from "screenStacks/SavedStack";
 import AccountStack from "screenStacks/AccountStack";
-import colors from "utilities/Colors";
+import colors from "utils/Colors";
 
 const Tab = createMaterialBottomTabNavigator();
 

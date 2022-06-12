@@ -6,3 +6,6 @@ export interface User {
     gender: 'M' | 'F' | '';
     token: string;
 }
+
+
+export const UserKeys : (keyof User)[] = ['username', 'password', 'token', 'gender'];

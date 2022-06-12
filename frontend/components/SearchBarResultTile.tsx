@@ -1,8 +1,8 @@
 import {useNavigation, NavigationContext} from "@react-navigation/native";
 import React, {useContext} from "react";
 import {View, Text, StyleSheet, TouchableOpacity, FlatList, ListRenderItem} from "react-native";
-import colors from "utilities/Colors";
-import { CourseRating } from "utilities/GolfCourse";
+import colors from "utils/Colors";
+import { CourseRating } from "utils/GolfCourse";
 import CoursePage from 'screens/CoursePage';
 
 

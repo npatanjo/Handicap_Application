@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity, Keyboard } from "react-native";
-import colors from 'utilities/Colors';
+import colors from 'utils/Colors';
 import {SearchQueryContext} from 'contexts/SearchContext';
 import { EvilIcons } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';

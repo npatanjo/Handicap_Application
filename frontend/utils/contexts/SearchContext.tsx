@@ -1,5 +1,5 @@
 import {createContext, Reducer, useReducer} from "react";
-import searchReducer, { searchState, searchActions, initialSearchState } from "utilities/reducers/SearchReducer";
+import searchReducer, { searchState, searchActions, initialSearchState } from "utils/reducers/SearchReducer";
 
 
 interface SearchContextProps {

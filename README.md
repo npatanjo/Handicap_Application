@@ -1,4 +1,7 @@
+---
 # Handicap_Application
+
+PUSH TO MASTER
 
 ---
  * [working api with mongodb](https://golf-handicap-api-ts.herokuapp.com/)  
@@ -82,92 +85,28 @@ function Searchpage({}: Props) {
 }
 ```
 
-<<<<<<< HEAD
 ---
 
-### API ROUTES
-
-localhost:1337/api/{route}
-
----
-
-`users/`
-
-`add` - body should contain json consisting of {username: " ", password: " ", token: " "}
-
-`get/all` - return all the users in the database\
-
-`get/by/username/{username}` - returns the document for the passed in username
-
-`delete/user/{username}` - deletes the account associated with the username
-
-`change/password/{username}/{new password}` - changes the password (will be implemented at a later date)
-
----
-
-`courses/`
-
-`post` - body should contain json of the course information
-
-`get` - return all of the courses
-
-`get/by/coursename/{course name}` - returns the document for specified course
-
-`get/par/{course name}/{gender (M or F)}/{color}` - return the par based on input
-
-`get/course/rating/18/{course name}/{gender (M or F)}/{color}` - return the course rating based on input
-
----
-
-<<<<<<< HEAD
 #### NATE TODO [ __NEW__ ]:
 * finish RESTful API for the users
 * make RESTful API for golf courses
-=======
-#### NATE TODO:
->>>>>>> backend
-
-- Make port branch
-- LMK what apis you add to backend
-- Link figma
-
-#### NICK TODO [ __NEW__ ]:
-
-- Add filter to searchbar and implement results components
-- Finish Log-In API using rn-async storage
-- Fix error with search results using spread operator
-- Create union-type of context types for wrapping multiple components
-- Research reducer hook
-- Decomp Splash Screen to a have animation in external component
-
 ---
-
-- Redux
-- Postgres?
-- Add Login Api
-- Add dropdown
-=======
-#### NATE TODO [ __NEW__ ]:
-* finish RESTful API for the users
-* make RESTful API for golf courses
-
 
 #### NICK TODO [ __NEW__ ]: 
+* [ __backend__ ] api call for nearby course ✖
+* [ __frontend__ ] animation for loading nearby courses ✖
+* [ __frontend__ ] clear userState, after login, and retrieve from localStorage ✖
+* [ __backend__ ] call for login, that returns userState (and potentially stores right there) ✖
+* [ __frontend__ ] saved screen and functionality that ( requires backend ) ✖
 * Add filter to searchbar and implement results components ✔
-* Finish Log-In API using rn-async storage (just need backend) ✖
+* Finish Log-In API using rn-async storage (just need backend) ✔
 * Fix error with search results using spread operator ✔
 * Create union-type of context types for wrapping multiple components ✔
 * Research reducer hook ✔
 * Decomp Splash Screen to a have animation in external component ✔
-* add saved screen and functionality that ( requires backend ) ✖
-* add filter to seachContext ✖
-* styling ✖
-* re-implement screens ✖
-___
-* Redux 
-* Postgres?
+* add filter to seachContext ✔
 
-___
+---
 ##### Resources:  
 
 * [The Nerdy Canuck](https://www.youtube.com/channel/UCmG1UbEI0iFE1tAw2SyvvXg):  
@@ -175,7 +114,6 @@ ___
 * [Best React Native Documentation](https://www.reactnative.express/)  
 * Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)  
 * [Package Search](https://www.npmjs.com/)
->>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
 
 ---
 
@@ -186,27 +124,6 @@ ___
 - [Best React Native Documentation](https://www.reactnative.express/)
 - Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)
 - [Package Search](https://www.npmjs.com/)
-
----
-
-##### Frontend Notes:
-
-- relative links are in [tsconfig.json](./frontend/tsconfig.json)
-- current thought process is that initial redux check for account login will be in the App.tsx file. (i.e. set the initial page to either the login page or already logged in screen)
-
----
-
-##### Backend Notes:
-
-- To run server in ./backend `yarn serve`
-
----
-
-##### Heroku:
-
-- All current heroku config/changes are in the backend branch.
-- The name of the current heroku app is handicap-app-711 ---> will change later. was made temp for testing.
-- The name of both the project and cluster is handicap. The project name can be changed but the cluster name is immutable.
 
 ---
 
