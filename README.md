@@ -3,7 +3,7 @@
 ---
  * [working api with mongodb](https://golf-handicap-api-ts.herokuapp.com/)  
  * [repo](https://github.com/ndonfris/backend_api)  
- * app will be on __vercel__ by tomorrow  
+ * app will be on __vercel__ by soon  
  * I converted the backend to native mongodb instead of mongoose since your
      calls weren't async and would crash the rendering of the page (like during
      a search)  
@@ -15,15 +15,13 @@
  * if you click the working api link: `https://golf-handicap-api-ts.herokuapp.com/`
     with the blank endpoint, a page displaying 'hit' means that the server is
     running healthy.  
+ * checkout these [apis](https://rapidapi.com/search/golf)
 
 ---
 
 [ _PROJECT BOARD_ ](https://github.com/npatanjo/Handicap_Application/projects/1)
 
 ## TODO:
-
-1. [hella apis](https://rapidapi.com/search/golf)
-1. Define what frameworks are being used so we can begin generating a startup script
 1. figma links:
    - [invite link](https://www.figma.com/file/cVglD4GCRkwcWVER1X9lAS/Handicap-Mockup?node-id=4%3A16)
    - [project link](https://www.figma.com/file/cVglD4GCRkwcWVER1X9lAS/Handicap-Mockup?node-id=0%3A1)
@@ -34,12 +32,8 @@
     "status": "success",
     "respone code": "201",
     {
-        "key": [
-            {"schema for a course"},
-            {"schema for a course"},
-            {"schema for a course"},
-            {"schema for a course"}
-        ]
+        "status": "success",
+        "message": "...",
     }
 }
 ```
@@ -82,10 +76,11 @@ function Searchpage({}: Props) {
 }
 ```
 
-<<<<<<< HEAD
 ---
 
 ### API ROUTES
+
+* needs to be updated below
 
 localhost:1337/api/{route}
 
@@ -119,13 +114,11 @@ localhost:1337/api/{route}
 
 ---
 
-<<<<<<< HEAD
 #### NATE TODO [ __NEW__ ]:
 * finish RESTful API for the users
 * make RESTful API for golf courses
 =======
 #### NATE TODO:
->>>>>>> backend
 
 - Make port branch
 - LMK what apis you add to backend
@@ -175,17 +168,6 @@ ___
 * [Best React Native Documentation](https://www.reactnative.express/)  
 * Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)  
 * [Package Search](https://www.npmjs.com/)
->>>>>>> fd7cbce3c765e91e03a4c78bae0bec02a59feeef
-
----
-
-##### Resources:
-
-- [The Nerdy Canuck](https://www.youtube.com/channel/UCmG1UbEI0iFE1tAw2SyvvXg):
-  - [Restful API with NodeJS, Express & Typescript](https://www.youtube.com/watch?v=vyz47fUXcxU&t=1056s)
-- [Best React Native Documentation](https://www.reactnative.express/)
-- Old project incase you need it. [TS-Movie-List](https://www.github.com/ndonfris/ts-movie-list)
-- [Package Search](https://www.npmjs.com/)
 
 ---
 
