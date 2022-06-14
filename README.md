@@ -6,7 +6,7 @@ PUSH TO MASTER
 ---
  * [working api with mongodb](https://golf-handicap-api-ts.herokuapp.com/)  
  * [repo](https://github.com/ndonfris/backend_api)  
- * app will be on __vercel__ by tomorrow  
+ * app will be on __vercel__ by soon  
  * I converted the backend to native mongodb instead of mongoose since your
      calls weren't async and would crash the rendering of the page (like during
      a search)  
