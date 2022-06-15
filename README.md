@@ -92,11 +92,13 @@ function Searchpage({}: Props) {
 * make RESTful API for golf courses
 ---
 
-#### NICK TODO [ __NEW__ ]: 
+#### TODO [ __NEW__ ]: 
 * [ __backend__ ] api call for nearby course ✖
-* [ __frontend__ ] animation for loading nearby courses ✖
-* [ __frontend__ ] clear userState, after login, and retrieve from localStorage ✖
 * [ __backend__ ] call for login, that returns userState (and potentially stores right there) ✖
+* [ __frontend__ ] coursePage (working but needs styling) ✖
+* [ __frontend__ ] add functionality for filters (in-progress) ✖
+* [ __frontend__ ] clear userState, after login, and retrieve from localStorage (could be better) ✖
+* [ __frontend__ ] animation for loading nearby courses ✖
 * [ __frontend__ ] saved screen and functionality that ( requires backend ) ✖
 * Add filter to searchbar and implement results components ✔
 * Finish Log-In API using rn-async storage (just need backend) ✔
