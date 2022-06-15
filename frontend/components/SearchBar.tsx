@@ -18,15 +18,15 @@ interface IconProps {
 }
 
 function RightIcon({ hasFocus, setVisible }: IconProps) {
-    const {state, dispatch} = useContext(SearchQueryContext);
+    const {searchState, searchDispatch} = useContext(SearchQueryContext);
 
     if (hasFocus) {
         return (
             <TouchableOpacity 
                 style={styles.rightIcon}
                 onPress={() => {
-                    dispatch({type: 'setFocused', payload: false});
-                    dispatch({type: 'setQuery', payload: ''});
+                    searchDispatch({type: 'setFocused', payload: false});
+                    searchDispatch({type: 'setQuery', payload: ''});
                 }}
             >
                 <EvilIcons name="close" size={24} color={ colors.white } />
@@ -57,21 +57,21 @@ function RightIcon({ hasFocus, setVisible }: IconProps) {
  */
 export default function SearchBar({onSearch, placeholder, icon}: Props) {
 
-    const { state, dispatch } = useContext(SearchQueryContext);
+    const {searchState, searchDispatch} = useContext(SearchQueryContext);
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        if (state.focused == false) {
+        if (searchState.focused == false) {
             Keyboard.dismiss();
         }
-    }, [ state.focused ]);
+    }, [ searchState.focused ]);
     
     const onChangeText = (text: string) => {
-        dispatch({type: 'setQuery', payload: text});
+        searchDispatch({type: 'setQuery', payload: text});
     }
 
     const onFocus = () => {
-        dispatch({type: 'setFocused', payload: true});
+        searchDispatch({type: 'setFocused', payload: true});
     }
 
     return (
@@ -80,7 +80,7 @@ export default function SearchBar({onSearch, placeholder, icon}: Props) {
                 <View style={styles.barContainer}>
                     <TextInput 
                         style={styles.textContainer}
-                        value={state.query}
+                        value={searchState.query}
                         onChangeText={onChangeText}
                         onSubmitEditing={onSearch}
                         onFocus={onFocus}
@@ -91,7 +91,7 @@ export default function SearchBar({onSearch, placeholder, icon}: Props) {
                         returnKeyType={"search"}
                         selectTextOnFocus={true}
                     />
-                    {icon && <RightIcon hasFocus={state.focused} setVisible={() => setVisible(true)} />}
+                    {icon && <RightIcon hasFocus={searchState.focused} setVisible={() => setVisible(true)} />}
                 </View>
                 <View style={styles.refineContainer}>
                     <RefineSearch visible={visible} setVisible={setVisible} currentSearch={'all'}/>

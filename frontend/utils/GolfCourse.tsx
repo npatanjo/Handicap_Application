@@ -14,3 +14,19 @@ export interface GolfCourse {
     courseName: string;
     courseRatings: CourseRating[];
 }
+
+export const emptyGolfCourse: GolfCourse = {
+    courseName: "",
+    courseRatings: [
+         {
+            color: "",
+            gender: "",
+            par: "",
+            courseRating18: "",
+            bogeyRating18: "",
+            slopeRating18: "",
+            front9: "",
+            back9: "",
+        }
+    ]
+}

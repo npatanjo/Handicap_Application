@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {SearchQueryContext} from "utils/contexts/SearchContext";
 import {CourseRating, GolfCourse} from "utils/GolfCourse";
 
 
@@ -10,11 +11,12 @@ interface Props {
 
 
 export default function CoursePage({courseName, courseRatings}: Props){
-    console.log("CoursePage: " + courseName);
+
+    const { searchState, searchDispatch } = useContext(SearchQueryContext);
 
     return ( 
         <View style={styles.container}>
-            <Text style={styles.titleText}>{courseName}</Text>
+            <Text style={styles.titleText}>{searchState.selected.courseName}</Text>
         </View>
     );
 }
@@ -37,7 +39,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         color: '#000',
-        backgroundColor: "blue",
     },
     rating: {
         flex: 1,

@@ -34,6 +34,8 @@ const NavButton = ({buttonType, nav} : NavButtonProps) => {
             }
             authDispatch({type: "LOGGED_IN", payload: successfulLogin})
             if (successfulLogin) {
+                // TODO: create method to generate token
+                // TODO: create helper method to store all of the new userState
                 userDispatch({type: "setUsername", payload: userState.username});
                 userDispatch({type: "setPassword", payload: userState.password});
                 userDispatch({type: "setGender", payload: "M"});
@@ -83,7 +85,7 @@ const LoginInput = ({type} : LoginInputProps) => {
 }
 
 
-export default function LoginScreen(){
+export default function LoginScreen() {
 
     const navigation = useNavigation();
     console.log(navigation);

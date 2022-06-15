@@ -20,26 +20,37 @@ function Sepeartor() {
     );
 }
 
+function Item({item, setVisible}: {item: string, setVisible: (bool: boolean) => void}) {
+    const [ isSelected, setIsSelected ] = useState(false);
+        return (
+            <TouchableOpacity
+                style={styles.item}
+                onPress={() => {{
+                    if (item === 'close') {
+                        setVisible(false);
+                    } else {
+                        setVisible(true);
+                    }
+                    setIsSelected(!isSelected);
+
+                }}}
+            >
+                {/* change color on select? */}
+                <View style={touchStyles(isSelected).circle}></View>
+                <Text style={styles.itemText}>{item}</Text>
+            </TouchableOpacity>
+        );
+}
+
 export default function RefineSearch({currentSearch, visible, setVisible} : Props) {
 
     const [modes, setModes] = useState(['all', 'color', 'course rating', 'bogey rating', 'slope rating', 'front 9', 'back 9', 'close']);
 
     const renderItem: ListRenderItem<string> = ({ item }) => {
-
         return (
-            <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                    {item === 'close' ? setVisible(false) : setVisible(true)};
-                }}
-            >
-                {/* change color on select? */}
-                <View style={styles.circle}></View>
-                <Text style={styles.itemText}>{item}</Text>
-            </TouchableOpacity>
+            <Item item={item} setVisible={setVisible} />
         );
     };
-
 
     return (
         <View style={styles.container}>
@@ -65,6 +76,16 @@ export default function RefineSearch({currentSearch, visible, setVisible} : Prop
     );
 };
 
+
+const touchStyles = (focused: boolean) => StyleSheet.create({
+    circle: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: focused ? 'black' : '#fff',
+        marginRight: 10,
+    },
+});
 
 const styles = StyleSheet.create({
     container: {

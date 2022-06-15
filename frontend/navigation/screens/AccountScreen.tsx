@@ -5,9 +5,7 @@ import {AuthContext} from "utils/contexts/AuthContext";
 import {UserContext} from "utils/contexts/UserContext";
 import {handleLogoutAuth} from "utils/functions/LoginHelpers";
 
-interface Props {
-
-}
+interface Props {}
 
 
 function Seperator() {
@@ -33,13 +31,17 @@ function InlineText({text1, text2} : InlineProps) {
 
 const AccountScreen = ({}: Props) => {
 
-    const { userState } = useContext(UserContext);
+    const { userState, userDispatch } = useContext(UserContext);
     const { authDispatch } = useContext(AuthContext);
 
 
     const logout = async () => {
+        userDispatch({type: "setUsername", payload: ""});
+        userDispatch({type: "setPassword", payload: ""});
+        userDispatch({type: "setToken", payload: ""});
+        userDispatch({type: "setGender", payload: ""});
+        await handleLogoutAuth();
         authDispatch({type: "LOGGED_IN", payload: false});
-        handleLogoutAuth();
     }
 
     return (
@@ -53,7 +55,6 @@ const AccountScreen = ({}: Props) => {
             <TouchableOpacity style={styles.button} onPress={logout}>
                 <Text style={styles.buttonText}>LOG OUT</Text>
             </TouchableOpacity>
-
         </View>
     );
 };

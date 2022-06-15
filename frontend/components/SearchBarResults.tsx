@@ -13,7 +13,7 @@ interface ItemProps {
 
 export default function SearchBarResults() {
 
-    const {state, dispatch} = useContext(SearchQueryContext);
+    const {searchState, searchDispatch} = useContext(SearchQueryContext);
 
     const navigation = useContext(NavigationContext);
 
@@ -35,16 +35,16 @@ export default function SearchBarResults() {
     return ( 
         <View style={styles.container}>
             {
-                state.loading 
+                searchState.loading 
                 ? <Text style={styles.loading}>Loading...</Text> 
                 : <FlatList
-                    data={state.results}
+                    data={searchState.results}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={renderItem}
                     showsVerticalScrollIndicator={false}
                     numColumns={1}
                     style={styles.list}
-                    extraData={state.results}
+                    extraData={searchState.results}
                     ItemSeparatorComponent={() => <View style={styles.separator} />}
                  />
             }

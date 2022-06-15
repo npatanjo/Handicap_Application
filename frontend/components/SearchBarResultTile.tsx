@@ -2,8 +2,9 @@ import {useNavigation, NavigationContext} from "@react-navigation/native";
 import React, {useContext} from "react";
 import {View, Text, StyleSheet, TouchableOpacity, FlatList, ListRenderItem} from "react-native";
 import colors from "utils/Colors";
-import { CourseRating } from "utils/GolfCourse";
+import { CourseRating, GolfCourse } from "utils/GolfCourse";
 import CoursePage from 'screens/CoursePage';
+import {SearchQueryContext} from "utils/contexts/SearchContext";
 
 
 interface Props {
@@ -15,6 +16,12 @@ interface Props {
 
 export default function SearchBarResultTile({courseName, courseRatings, firstCourseRatings, navigation}: Props) {
 
+    const { searchState, searchDispatch } = useContext(SearchQueryContext);
+
+    const thisCourse: GolfCourse = {
+        courseName: courseName,
+        courseRatings: courseRatings,
+    };
 
     const renderItem : ListRenderItem<CourseRating> = ({ item }) => {
         return (
@@ -29,7 +36,11 @@ export default function SearchBarResultTile({courseName, courseRatings, firstCou
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={() => navigation.navigate('CoursePage', {courseName: courseName, courseRatings: courseRatings})}
+            onPress={() => {
+                searchDispatch({type: "setNewSelection", payload: thisCourse});
+                console.log(searchState.selected);
+                navigation.navigate('CoursePage');
+            }}
         >
             <View style={styles.title}>
                 <Text>{courseName}</Text>

@@ -14,23 +14,23 @@ interface ItemProps {
 
 export default function SearchBarFilter({onPress}: Props) {
 
-    const { state, dispatch } = useContext(SearchQueryContext);
+    const { searchState, searchDispatch } = useContext(SearchQueryContext);
 
     useEffect(() => {
         async function getFilter(q: string) {
-            console.log(`useEffect called in SearchBarFilter setFilters(${state.query})`);
+            console.log(`useEffect called in SearchBarFilter setFilters(${searchState.query})`);
             console.log();
             try{
                 const filters = await fetchFilter(q);
-                dispatch({type:'setFilter', payload:filters});
+                searchDispatch({type:'setFilter', payload:filters});
             } catch (e) {
                 console.log(e);
             } finally {
 
             }
         }
-        getFilter(state.query);
-    }, [state.query]);
+        getFilter(searchState.query);
+    }, [searchState.query]);
 
 
     const ItemDivider = () => {
@@ -52,12 +52,12 @@ export default function SearchBarFilter({onPress}: Props) {
     return (
         <View style={styles.container}>
             <FlatList
-                data={state.filter}
+                data={searchState.filter}
                 renderItem={renderItem}
                 ItemSeparatorComponent={ItemDivider}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={1}
-                extraData={state.filter}
+                extraData={searchState.filter}
                 keyboardShouldPersistTaps={'handled'}
             />
         </View>

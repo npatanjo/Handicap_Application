@@ -21,42 +21,38 @@ import searchReducer from "utils/reducers/SearchReducer";
 *    • I will probably try to pass the props down through useContext()
 *    • Also we should probably use a JSX component like FlatList instead of array.filter()
 *      to avoid undefined objects
+*    • Error with coursePage courseName
 *
 * @param {Props} props - N/A (potential styling?)
 * @returns {React.JSX}
 */
 export default function SearchScreen(){
 
-    const searchStates = useContext(SearchQueryContext);
-
-    const [state, dispatch] = useReducer(searchReducer, searchStates as never);
-
-    const contextValue = useMemo(() => ({state, dispatch}), [state, dispatch]);
+    const {searchState, searchDispatch} = useContext(SearchQueryContext);
 
     const onSearch = async () : Promise<void> => {
-        if (state.query.trim() === "") {
-            dispatch({type: "setFocused", payload: false});
+        if (searchState.query.trim() === "") {
+            searchDispatch({type: "setFocused", payload: false});
             return;
         }
         try {
-            const foundCourses : GolfCourse[] = await fetchResults(state.query);
-            dispatch({type: "setResults", payload: foundCourses});
+            const foundCourses : GolfCourse[] = await fetchResults(searchState.query);
+            searchDispatch({type: "setResults", payload: foundCourses});
         } catch (e) {
             console.log(e);
         } finally {
-            dispatch({type: "setFocused", payload: false});
+            searchDispatch({type: "setFocused", payload: false});
         }
     };
 
     const onFilterSelected = (selected: string) : void => {
-        dispatch({type: "setQuery", payload: selected});
+        searchDispatch({type: "setQuery", payload: selected});
         onSearch();
-        dispatch({type: "setFocused", payload: false});
+        searchDispatch({type: "setFocused", payload: false});
     }
 
     return (
         <View style={styles.container}>
-            <SearchQueryContext.Provider value={contextValue}>
                 <View style={styles.topContainer}>
                     <SearchBar
                         onSearch={onSearch}
@@ -65,12 +61,11 @@ export default function SearchScreen(){
                     />
                 </View>
                 <View style={styles.results}>
-                    {!state.focused 
+                    {!searchState.focused 
                         ? <SearchBarResults />
                         : <SearchBarFilter onPress={onFilterSelected} /> 
                     }
                 </View>
-            </SearchQueryContext.Provider>
         </View>
     );
 };

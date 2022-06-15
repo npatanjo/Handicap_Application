@@ -1,23 +1,16 @@
-import {createContext, Reducer, useReducer} from "react";
-import searchReducer, { searchState, searchActions, initialSearchState } from "utils/reducers/SearchReducer";
+import {createContext} from "react";
+import { searchState, searchAction, initialSearchState } from "utils/reducers/SearchReducer";
 
 
 interface SearchContextProps {
     state: searchState;
-    dispatch: React.Dispatch<searchActions>;
+    dispatch: React.Dispatch<searchAction>;
 }
 export const SearchQueryContext = createContext({
-    state: initialSearchState,
-    dispatch: (arg: searchActions) => {}
+    searchState: initialSearchState,
+    searchDispatch: ({type, payload}: searchAction) => {}
 })
-
-//export const SearchQueryContext = createContext({
-//    query: "",
-//    setQuery: (text: string) => {},
-//});
-//export const SearchResultContext = createContext({
-//    result: '',
-//    setResult: (result: string) => {}
-//});
-
-
+// export const SearchQueryContext = createContext({
+//     state: initialSearchState,
+//     dispatch: (arg: searchActions) => {}
+// })
